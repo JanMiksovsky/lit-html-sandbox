@@ -8,68 +8,7 @@
   <title>lit-html</title>
   <link rel="stylesheet" href="demos.css">
 
-  <script type="module">
-    import { html, render } from './node_modules/lit-html/lit-html.js';
-
-    function LitHtmlShadowMixin(Base) {
-      return class LitHtmlShadow extends Base {
-
-        constructor() {
-          super();
-          this.attachShadow({ mode: 'open' });
-          this.setState({});
-        }
-
-        render() {
-          render(this.template, this.shadowRoot);
-        }
-
-        setState(state) {
-          if (this._state === undefined) {
-            this._state = {};
-          }
-          Object.assign(this._state, state);
-          this.render();
-        }
-
-        get state() {
-          return this._state;
-        }
-      }
-    }
-
-    class TestElement extends LitHtmlShadowMixin(HTMLElement) {
-
-      constructor() {
-        super();
-        this.setState({
-          punctuation: '.'
-        });
-      }
-
-      get punctuation() {
-        return this.state.punctuation;
-      }
-      set punctuation(punctuation) {
-        this.setState({ punctuation });
-      }
-
-      get template() {
-        const punctuation = this.state.punctuation || '';
-        const template = html`
-          <style>
-            :host {
-              font-style: ${punctuation.match(/\!/) ? 'italic': 'normal'};
-            }
-          </style>
-          Hello, <slot></slot>${punctuation}
-        `;
-        return template;
-      }
-    }
-
-    customElements.define('test-element', TestElement);
-  </script>
+  <script type="module" src="./src/TestElement.js"></script>
 
 </head>
 
