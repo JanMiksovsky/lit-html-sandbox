@@ -1,5 +1,6 @@
 {
   "name": "lit-html-sandbox",
+  "version": "0.0.1",
   "devDependencies": {
     "lit-html": "0.6.0"
   }

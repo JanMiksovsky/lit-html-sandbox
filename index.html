@@ -12,12 +12,32 @@
     import { html, render } from './node_modules/lit-html/lit-html.js';
 
     class TestElement extends HTMLElement {
-      
+
       constructor() {
         super();
         this.attachShadow({ mode: 'open' });
-        const result = html`Hello, <slot></slot>.`;
-        render(result, this.shadowRoot);
+        this._punctuation = '.';
+        this.render();
+      }
+
+      get punctuation() {
+        return this._punctuation;
+      }
+      set punctuation(punctuation) {
+        this._punctuation = punctuation;
+        this.render();
+      }
+
+      render() {
+        const template = html`
+          <style>
+            :host {
+              font-style: ${this.punctuation.match(/\!/) ? 'italic': 'normal'};
+            }
+          </style>
+          Hello, <slot></slot>${this.punctuation}
+        `;
+        render(template, this.shadowRoot);
       }
 
     }
