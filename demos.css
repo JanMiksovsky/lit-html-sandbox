@@ -14,3 +14,7 @@ p,
 li {
   max-width: 800px;
 }
+
+:not(:defined) {
+  display: none;
+}

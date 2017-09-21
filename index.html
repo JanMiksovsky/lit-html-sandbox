@@ -11,35 +11,61 @@
   <script type="module">
     import { html, render } from './node_modules/lit-html/lit-html.js';
 
-    class TestElement extends HTMLElement {
+    function LitHtmlShadowMixin(Base) {
+      return class LitHtmlShadow extends Base {
+
+        constructor() {
+          super();
+          this.attachShadow({ mode: 'open' });
+          this.setState({});
+        }
+
+        render() {
+          render(this.template, this.shadowRoot);
+        }
+
+        setState(state) {
+          if (this._state === undefined) {
+            this._state = {};
+          }
+          Object.assign(this._state, state);
+          this.render();
+        }
+
+        get state() {
+          return this._state;
+        }
+      }
+    }
+
+    class TestElement extends LitHtmlShadowMixin(HTMLElement) {
 
       constructor() {
         super();
-        this.attachShadow({ mode: 'open' });
-        this._punctuation = '.';
-        this.render();
+        this.setState({
+          punctuation: '.'
+        });
       }
 
       get punctuation() {
-        return this._punctuation;
+        return this.state.punctuation;
       }
       set punctuation(punctuation) {
-        this._punctuation = punctuation;
-        this.render();
+        this.setState({ punctuation });
       }
 
-      render() {
+      get template() {
+        const punctuation = this.state.punctuation || '';
         const template = html`
           <style>
             :host {
-              font-style: ${this.punctuation.match(/\!/) ? 'italic': 'normal'};
+              font-style: ${punctuation.match(/\!/) ? 'italic': 'normal'};
             }
           </style>
-          Hello, <slot></slot>${this.punctuation}
+          Hello, <slot></slot>${punctuation}
         `;
-        render(template, this.shadowRoot);
+        return template;
       }
-
     }
 
     customElements.define('test-element', TestElement);
