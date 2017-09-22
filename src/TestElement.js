@@ -1,4 +1,5 @@
 import { html } from '../node_modules/lit-html/lit-html.js';
+import { formatStyleProps, mergeDeep } from './helpers.js';
 import LitHtmlShadowMixin from './LitHtmlShadowMixin.js';
 
 
@@ -8,6 +9,10 @@ export default class TestElement extends LitHtmlShadowMixin(HTMLElement) {
     super();
     this.setState({
       punctuation: '.'
+    });
+    const span = this.shadowRoot.querySelector('span');
+    span.addEventListener('click', event => {
+      console.log('click');
     });
   }
 
@@ -29,38 +34,24 @@ export default class TestElement extends LitHtmlShadowMixin(HTMLElement) {
 
   get template() {
     const rootProps = this.rootProps();
-    const rootStyle = formatStyle(rootProps.style);
+    const rootStyle = formatStyleProps(rootProps.style);
     const template = html`
       <style>
         :host {
           ${rootStyle}
         }
+
+        span {
+          cursor: pointer;
+          user-select: none;
+        }
       </style>
-      Hello, <slot></slot>${this.punctuation}
+      Hello, <span>
+        <slot></slot>
+      </span>${this.punctuation}
     `;
     return template;
   }
-}
-
-
-function formatStyle(styleProps) {
-  if (!styleProps) {
-    return '';
-  }
-  const attributes = Object.keys(styleProps).map(key => `${key}: ${styleProps[key]}`);
-  return attributes.join(';');
-}
-
-function mergeDeep(target, source) {
-  const output = Object.assign({}, target);
-  Object.keys(source).forEach(key => {
-    const value = source[key];
-    const valueIsObject = typeof value === 'object' && !Array.isArray(value);
-    output[key] = valueIsObject && key in output ?
-      mergeDeep(output[key], value) :
-      value;
-  });
-  return output;
 }
 
 
