@@ -7,7 +7,12 @@ export default function LitHtmlShadowMixin(Base) {
     constructor() {
       super();
       this.attachShadow({ mode: 'open' });
-      this.setState({});
+      this._state = {};
+      this.setState(this.defaultState);
+    }
+
+    get defaultState() {
+      return super.defaultState || {};
     }
 
     render() {
@@ -15,9 +20,6 @@ export default function LitHtmlShadowMixin(Base) {
     }
 
     setState(state) {
-      if (this._state === undefined) {
-        this._state = {};
-      }
       Object.assign(this._state, state);
       this.render();
     }

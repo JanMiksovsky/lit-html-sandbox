@@ -7,13 +7,16 @@ export default class TestElement extends LitHtmlShadowMixin(HTMLElement) {
 
   constructor() {
     super();
-    this.setState({
-      punctuation: '.'
-    });
     const span = this.shadowRoot.querySelector('span');
     span.addEventListener('click', event => {
       console.log('click');
     });
+  }
+
+  get defaultState() {
+    return {
+      punctuation: '.'
+    };
   }
 
   get punctuation() {
