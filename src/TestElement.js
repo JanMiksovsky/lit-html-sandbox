@@ -19,12 +19,12 @@ export default class TestElement extends LitHtmlShadowMixin(HTMLElement) {
   }
 
   rootProps() {
-    const base = super.rootProps ? super.rootProps() : {};
     const punctuation = this.state.punctuation || '';
-    const style = Object.assign({}, base.style, {
-      'font-style': punctuation.match(/!/) ? 'italic' : 'inherit'
+    return mergeDeep(super.rootProps && super.rootProps(), {
+      style: {
+        'font-style': punctuation.match(/!/) ? 'italic' : 'inherit'
+      }
     });
-    return Object.assign({}, base, { style });
   }
 
   get template() {
@@ -44,8 +44,23 @@ export default class TestElement extends LitHtmlShadowMixin(HTMLElement) {
 
 
 function formatStyle(styleProps) {
+  if (!styleProps) {
+    return '';
+  }
   const attributes = Object.keys(styleProps).map(key => `${key}: ${styleProps[key]}`);
   return attributes.join(';');
+}
+
+function mergeDeep(target, source) {
+  const output = Object.assign({}, target);
+  Object.keys(source).forEach(key => {
+    const value = source[key];
+    const valueIsObject = typeof value === 'object' && !Array.isArray(value);
+    output[key] = valueIsObject && key in output ?
+      mergeDeep(output[key], value) :
+      value;
+  });
+  return output;
 }
 
 
