@@ -18,18 +18,34 @@ export default class TestElement extends LitHtmlShadowMixin(HTMLElement) {
     this.setState({ punctuation });
   }
 
-  get template() {
+  rootProps() {
+    const base = super.rootProps ? super.rootProps() : {};
     const punctuation = this.state.punctuation || '';
+    const style = Object.assign({}, base.style, {
+      'font-style': punctuation.match(/!/) ? 'italic' : 'inherit'
+    });
+    return Object.assign({}, base, { style });
+  }
+
+  get template() {
+    const rootProps = this.rootProps();
+    const rootStyle = formatStyle(rootProps.style);
     const template = html`
       <style>
         :host {
-          font-style: ${punctuation.match(/\!/) ? 'italic' : 'normal'};
+          ${rootStyle}
         }
       </style>
-      Hello, <slot></slot>${punctuation}
+      Hello, <slot></slot>${this.punctuation}
     `;
     return template;
   }
+}
+
+
+function formatStyle(styleProps) {
+  const attributes = Object.keys(styleProps).map(key => `${key}: ${styleProps[key]}`);
+  return attributes.join(';');
 }
 
 
