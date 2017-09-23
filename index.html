@@ -5,15 +5,34 @@
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>lit-html</title>
+  <title>Web component using lit-html</title>
   <link rel="stylesheet" href="demos.css">
 
   <script type="module" src="./src/TestElement.js"></script>
 
+  <style>
+    .note {
+      color: #444;
+      font-size: smaller;
+    }
+  </style>
+
 </head>
 
 <body>
-  <test-element>world</test-element>
+  <p class="note">
+    The custom elements below are web components that use a functional reactive
+    model to render their shadow elements. In this case, they use lit-html.
+  </p>
+  <test-element>there</test-element>
+  <test-element punctuation="?">anybody</test-element>
+  <test-element punctuation="!">world</test-element>
+  <p class="note">
+    This web component supports a configurable <code>punctuation</code>
+    attribute/property. If the punctuation includes an exclamation mark, the
+    component's styling will change to italic text. Clicking on the element will
+    toggle its punctuation.
+  </p>
 </body>
 
 </html>
