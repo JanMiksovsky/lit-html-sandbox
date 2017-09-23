@@ -24,6 +24,7 @@ export default function LitHtmlShadowMixin(Base) {
     render() {
       // Invoke lit-html to render the shadow subtree.
       render(this.template, this.shadowRoot);
+      updateProps(this, this.hostProps());
     }
 
     setState(state) {
@@ -35,4 +36,21 @@ export default function LitHtmlShadowMixin(Base) {
       return this[stateKey];
     }
   }
+}
+
+
+function updateProps(element, props) {
+  Object.keys(props).forEach(key => {
+    if (key !== 'style') {
+      const isAttribute = key.match(/-/);
+      const value = props[key];
+      if (isAttribute && element.getAttribute(key) !== value) {
+        // Update attribute
+        element.setAttribute(key, value);
+      } else if (element[key] !== value) {
+        // Update property
+        element[key] = value;
+      }
+    }
+  });
 }
