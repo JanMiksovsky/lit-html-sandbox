@@ -12,17 +12,18 @@ const Base =
 
 
 /**
- * A silly little "Hello, world" element with a configurable `punctuation` property.
- * 
- * This uses a functional reactive style that maps state to DOM. For this
- * purpose, the component uses lit-html, although other similar libraries could
- * be used instead.
+ * A simple web component created with a functional reactive programming (FRP)
+ * style. In this approach, we track component state in a single `state` member,
+ * then render that state to DOM. For that task, the component uses lit-html,
+ * although other similar libraries could be used instead.
+ *
+ * The component itself is a trivial "Hello, world" element.
  */
 export default class TestElement extends Base {
 
   constructor() {
     super();
-    // Silly event handler just to show we can respond to events.
+    // Sample event handler just to show we can respond to events.
     this.addEventListener('click', event => {
       this.togglePunctuation();
     });
