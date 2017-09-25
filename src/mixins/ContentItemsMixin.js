@@ -62,6 +62,21 @@ export default function ContentItemsMixin(Base) {
       });
     }
 
+    /**
+     * Return the index of the list child that is, or contains, the indicated target
+     * node. Return -1 if not found.
+     */
+    indexOfTarget(target) {
+      const items = this.items;
+      for (let index = 0; index < items.length; index++) {
+        const item = items[index];
+        if (item.contains(target)) {
+          return index;
+        }
+      }
+      return -1;
+    }
+
     get items() {
       return super.items || this.state.items;
     }

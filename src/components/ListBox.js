@@ -1,6 +1,7 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
 import { formatStyleProps, mergeDeep } from '../mixins/helpers.js';
 import AttributeMarshallingMixin from '../mixins/AttributeMarshallingMixin.js';
+import ClickSelectionMixin from '../mixins/ClickSelectionMixin.js';
 import ContentItemsMixin from '../mixins/ContentItemsMixin.js';
 import DefaultSlotContentMixin from '../mixins/DefaultSlotContentMixin.js';
 import DirectionSelectionMixin from '../mixins/DirectionSelectionMixin.js';
@@ -13,6 +14,7 @@ import SingleSelectionMixin from '../mixins/SingleSelectionMixin.js';
 
 const Base =
   AttributeMarshallingMixin(
+  ClickSelectionMixin(
   ContentItemsMixin(
   DefaultSlotContentMixin(
   DirectionSelectionMixin(
@@ -22,7 +24,7 @@ const Base =
   ReactiveMixin(
   SingleSelectionMixin(
     HTMLElement
-  )))))))));
+  ))))))))));
 
 
 export default class ListBox extends Base {
