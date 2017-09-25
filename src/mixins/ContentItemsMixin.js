@@ -1,7 +1,7 @@
 import * as content from './content.js';
 // import Symbol from './Symbol.js';
 import symbols from './symbols.js';
-import { mergeDeep, updateProps } from '../mixins/helpers.js';
+import { updateProps } from '../mixins/helpers.js';
 
 
 // Symbols for private data members on an element.
@@ -51,21 +51,13 @@ export default function ContentItemsMixin(Base) {
 
     [symbols.contentChanged]() {
       if (super[symbols.contentChanged]) { super[symbols.contentChanged](); }
-
-      // Since we got the contentChanged call, we'll assume we'll be notified if
-      // the set of items changes later. We turn on memoization of the items
-      // property by setting our internal property to null (instead of
-      // undefined).
-      // this[itemsKey] = null;
-
-      // this[symbols.itemsChanged]();
       this.setState({
         items: content.substantiveElements(this[symbols.content])
       });
     }
 
     get defaultState() {
-      return mergeDeep(super.defaultState, {
+      return Object.assign({}, super.defaultState, {
         items: []
       });
     }
@@ -82,52 +74,6 @@ export default function ContentItemsMixin(Base) {
         });
       }
     }
-
-    /**
-     * The current set of items in the list. See the top-level documentation for
-     * mixin for a description of how items differ from plain content.
-     *
-     * @type {Element[]}
-     */
-    // get items() {
-    //   let items;
-    //   if (this[itemsKey] == null) {
-    //     items = content.substantiveElements(this[symbols.content]);
-    //     // Note: test for *equality* with null, since we use `undefined` to
-    //     // indicate that we're not yet caching items.
-    //     if (this[itemsKey] === null) {
-    //       // Memoize the set of items.
-    //       this[itemsKey] = items;
-    //     }
-    //   } else {
-    //     // Return the memoized items.
-    //     items = this[itemsKey];
-    //   }
-    //   return items;
-    // }
-
-    /**
-     * This method is invoked when the underlying contents change. It is also
-     * invoked on component initialization – since the items have "changed" from
-     * being nothing.
-     */
-    // [symbols.itemsChanged]() {
-    //   if (super[symbols.itemsChanged]) { super[symbols.itemsChanged](); }
-
-    //   // Perform per-item initialization if `itemAdded` is defined.
-    //   if (this[symbols.itemAdded]) {
-    //     Array.prototype.forEach.call(this.items, item => {
-    //       if (!item[itemInitializedKey]) {
-    //         this[symbols.itemAdded](item);
-    //         item[itemInitializedKey] = true;
-    //       }
-    //     });
-    //   }
-
-    //   if (this[symbols.raiseChangeEvents]) {
-    //     this.dispatchEvent(new CustomEvent('items-changed'));
-    //   }
-    // }
 
     /**
      * Fires when the items in the list change.

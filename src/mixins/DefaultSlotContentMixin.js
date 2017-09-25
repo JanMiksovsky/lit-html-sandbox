@@ -25,7 +25,7 @@ const slotchangeFiredKey = Symbol('slotchangeFired');
  *     super();
  *     let root = this.attachShadow({ mode: 'open' });
  *     root.innerHTML = `<slot></slot>`;
- *     this[symbols.shadowCreated]();
+ *     thisconnectedCallback();
  *   }
  *
  *   [symbols.contentChanged]() {
@@ -41,7 +41,7 @@ const slotchangeFiredKey = Symbol('slotchangeFired');
  * element in its shadow subtree.
  *
  * To receive `contentChanged` notification, this mixin expects a component to
- * invoke a method called `symbols.shadowCreated` after the component's shadow
+ * invoke a method called `symbols.connectedCallback` after the component's shadow
  * root has been created and populated.
  *
  * Most Elix [elements](elements) use `DefaultSlotContentMixin`, including
@@ -56,18 +56,16 @@ export default function DefaultSlotContentMixin(Base) {
 
     connectedCallback() {
       if (super.connectedCallback) { super.connectedCallback(); }
-      // HACK for Blink, which doesn't correctly fire initial slotchange.
-      // See https://bugs.chromium.org/p/chromium/issues/detail?id=696659
-      setTimeout(() => {
-        // By this point, the slotchange event should have fired.
-        if (!this[slotchangeFiredKey]) {
-          // slotchange event didn't fire; we're in Blink. Force the invocation
-          // of contentChanged that would have happened on slotchange.
+      // Listen to changes on the default slot.
+      const slot = defaultSlot(this);
+      if (slot) {
+        slot.addEventListener('slotchange', event => {
+          this[slotchangeFiredKey] = true;
           if (this[symbols.contentChanged]) {
             this[symbols.contentChanged]();
           }
-        }
-      });
+        });
+      }
     }
 
     get content() {
@@ -98,19 +96,6 @@ export default function DefaultSlotContentMixin(Base) {
       return assignedNodes;
     }
 
-    [symbols.shadowCreated]() {
-      if (super[symbols.shadowCreated]) { super[symbols.shadowCreated](); }
-      // Listen to changes on the default slot.
-      const slot = defaultSlot(this);
-      if (slot) {
-        slot.addEventListener('slotchange', event => {
-          this[slotchangeFiredKey] = true;
-          if (this[symbols.contentChanged]) {
-            this[symbols.contentChanged]();
-          }
-        });
-      }
-    }
   }
 
   return DefaultSlotContent;

@@ -16,9 +16,6 @@ export default function LitHtmlShadowMixin(Base) {
         newShadow = true;
       }
       render(this.template, this.shadowRoot);
-      if (newShadow && this[symbols.shadowCreated]) {
-        this[symbols.shadowCreated]();
-      }
     }
   }
 }
