@@ -70,6 +70,10 @@ export default function ContentItemsMixin(Base) {
       });
     }
 
+    get items() {
+      return super.items || this.state.items;
+    }
+
     render() {
       if (super.render) { super.render(); }
       if (this.itemProps) {

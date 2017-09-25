@@ -7,15 +7,19 @@ export function formatStyleProps(styleProps) {
 }
 
 
-export function mergeDeep(target, source) {
-  const output = Object.assign({}, target);
-  Object.keys(source).forEach(key => {
-    const value = source[key];
-    const valueIsObject = typeof value === 'object' && !Array.isArray(value);
-    output[key] = valueIsObject && key in output ?
-      mergeDeep(output[key], value) :
-      value;
-  });
+export function mergeDeep(...sources) {
+  const output = {};
+  sources.forEach(source => {
+    if (source) {
+      Object.keys(source).forEach(key => {
+        const value = source[key];
+        const valueIsObject = typeof value === 'object' && !Array.isArray(value);
+        output[key] = valueIsObject && key in output ?
+          mergeDeep(output[key], value) :
+          value;
+      });
+    }
+  })
   return output;
 }
 

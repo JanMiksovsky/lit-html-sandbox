@@ -3,8 +3,9 @@ import { formatStyleProps, mergeDeep } from '../mixins/helpers.js';
 import AttributeMarshallingMixin from '../mixins/AttributeMarshallingMixin.js';
 import ContentItemsMixin from '../mixins/ContentItemsMixin.js';
 import DefaultSlotContentMixin from '../mixins/DefaultSlotContentMixin.js';
-import ReactiveMixin from '../mixins/ReactiveMixin.js';
 import LitHtmlShadowMixin from '../mixins/LitHtmlShadowMixin.js';
+import ReactiveMixin from '../mixins/ReactiveMixin.js';
+import SingleSelectionMixin from '../mixins/SingleSelectionMixin.js';
 
 
 const Base =
@@ -13,29 +14,27 @@ const Base =
   DefaultSlotContentMixin(
   LitHtmlShadowMixin(
   ReactiveMixin(
+  SingleSelectionMixin(
     HTMLElement
-  )))));
+  ))))));
 
 
 export default class ListBox extends Base {
 
   itemProps(item, index) {
     const base = super.itemProps ? super.itemProps(item, index) : {};
-    // const baseStyle = base.style || {};
     const itemStyle = {
       'padding': '0.25em',
     };
-    // const selectedStyle = {
-    //   'background': 'highlight',
-    //   'color': 'highlighttext'
-    // };
-    // const selected = index === this.state.selectedIndex;
-    // const style = Object.assign(
-    //   {},
-    //   baseStyle,
-    //   itemStyle,
-    //   selected && selectedStyle
-    // );
+    const selectedStyle = {
+      'background': 'highlight',
+      'color': 'highlighttext'
+    };
+    const selected = index === this.state.selectedIndex;
+    const style = mergeDeep(
+      itemStyle,
+      selected && selectedStyle
+    );
     // const className = classnames(
     //   item.props.className,
     //   base.className,
@@ -51,9 +50,7 @@ export default class ListBox extends Base {
     //     style
     //   }
     // );
-    return mergeDeep(base, {
-      style: itemStyle
-    });
+    return mergeDeep(base, { style });
   }
 
   get template() {
