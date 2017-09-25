@@ -32,27 +32,13 @@ export default function SingleSelectionMixin(Base) {
         this.state.selectionWraps || selectedIndex < 0 || selectedIndex > 0;
     }
 
-    // componentWillReceiveProps(props) {
-    //   if (super.componentWillReceiveProps) { super.componentWillReceiveProps(props); }
-    //   if (props.selectedIndex != null && this.state.selectedIndex !== props.selectedIndex) {
-    //     this.setState({
-    //       selectedIndex: props.selectedIndex
-    //     });
-    //   }
-    // }
-
     get defaultState() {
       return mergeDeep(super.defaults, {
+        selectedIndex: -1,
         selectionRequired: false,
         selectionWraps: false
       });
     }
-
-    // get items() {
-    //   // Prefer base result if defined. If undefined, the default implementation
-    //   // returns the component's children.
-    //   return super.items || this.props.items || this.props.children;
-    // }
 
     selectFirst() {
       if (super.selectFirst) { super.selectFirst(); }

@@ -3,6 +3,9 @@ import { formatStyleProps, mergeDeep } from '../mixins/helpers.js';
 import AttributeMarshallingMixin from '../mixins/AttributeMarshallingMixin.js';
 import ContentItemsMixin from '../mixins/ContentItemsMixin.js';
 import DefaultSlotContentMixin from '../mixins/DefaultSlotContentMixin.js';
+import DirectionSelectionMixin from '../mixins/DirectionSelectionMixin.js';
+import KeyboardDirectionMixin from '../mixins/KeyboardDirectionMixin.js';
+import KeyboardMixin from '../mixins/KeyboardMixin.js';
 import LitHtmlShadowMixin from '../mixins/LitHtmlShadowMixin.js';
 import ReactiveMixin from '../mixins/ReactiveMixin.js';
 import SingleSelectionMixin from '../mixins/SingleSelectionMixin.js';
@@ -12,11 +15,14 @@ const Base =
   AttributeMarshallingMixin(
   ContentItemsMixin(
   DefaultSlotContentMixin(
+  DirectionSelectionMixin(
+  KeyboardDirectionMixin(
+  KeyboardMixin(
   LitHtmlShadowMixin(
   ReactiveMixin(
   SingleSelectionMixin(
     HTMLElement
-  ))))));
+  )))))))));
 
 
 export default class ListBox extends Base {
