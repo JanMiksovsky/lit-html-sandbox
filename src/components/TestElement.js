@@ -1,7 +1,7 @@
-import { html } from '../node_modules/lit-html/lit-html.js';
-import { formatStyleProps, mergeDeep } from './helpers.js';
-import AttributeMarshallingMixin from './AttributeMarshallingMixin.js';
-import LitHtmlShadowMixin from './LitHtmlShadowMixin.js';
+import { html } from '../../node_modules/lit-html/lit-html.js';
+import { formatStyleProps, mergeDeep } from '../mixins/helpers.js';
+import AttributeMarshallingMixin from '../mixins/AttributeMarshallingMixin.js';
+import LitHtmlShadowMixin from '../mixins/LitHtmlShadowMixin.js';
 
 
 const Base =
