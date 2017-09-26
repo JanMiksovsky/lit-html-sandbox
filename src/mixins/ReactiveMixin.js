@@ -18,14 +18,13 @@ export default function ReactiveMixin(Base) {
       return super.defaultState || {};
     }
 
-    hostProps() {
-      return super.hostProps || {};
-    }
-
     render() {
       if (super.render) { super.render(); }
       console.log(`ReactiveMixin: render`);
-      updateProps(this, this.hostProps());
+      if (this.hostProps) {
+        const hostProps = this.hostProps();
+        updateProps(this, hostProps);
+      }
       if (this.componentDidUpdate) {
         Promise.resolve().then(() => {
           this.componentDidUpdate();

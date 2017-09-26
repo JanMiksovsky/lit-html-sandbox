@@ -1,4 +1,3 @@
-import { mergeDeep } from '../mixins/helpers.js';
 import symbols from './symbols.js';
 
 
@@ -19,21 +18,21 @@ export default function KeyboardMixin(Base) {
     }
 
     get defaultState() {
-      return mergeDeep(super.defaultState, {
+      return Object.assign({}, super.defaultState, {
         tabIndex: 0
+      });
+    }
+
+    hostProps() {
+      const base = super.hostProps ? super.hostProps() : {};
+      return Object.assign({}, base, {
+        tabIndex: this.state.tabIndex
       });
     }
 
     [symbols.keydown](event) {
       if (super[symbols.keydown]) { return super[symbols.keydown](event); }
       return false;
-    }
-
-    hostProps() {
-      const base = super.hostProps ? super.hostProps() : {};
-      return mergeDeep(super.hostProps, {
-        tabIndex: this.state.tabIndex
-      });
     }
     
   };

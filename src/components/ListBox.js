@@ -11,6 +11,7 @@ import KeyboardPagedSelectionMixin from '../mixins/KeyboardPagedSelectionMixin.j
 import KeyboardPrefixSelectionMixin from '../mixins/KeyboardPrefixSelectionMixin.js';
 import LitHtmlShadowMixin from '../mixins/LitHtmlShadowMixin.js';
 import ReactiveMixin from '../mixins/ReactiveMixin.js';
+import SelectionAriaMixin from '../mixins/SelectionAriaMixin.js';
 import SelectionInViewMixin from '../mixins/SelectionInViewMixin.js';
 import SingleSelectionMixin from '../mixins/SingleSelectionMixin.js';
 
@@ -27,10 +28,11 @@ const Base =
   KeyboardPrefixSelectionMixin(
   LitHtmlShadowMixin(
   ReactiveMixin(
+  SelectionAriaMixin(
   SelectionInViewMixin(
   SingleSelectionMixin(
     HTMLElement
-  )))))))))))));
+  ))))))))))))));
 
 
 export default class ListBox extends Base {

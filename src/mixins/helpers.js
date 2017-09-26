@@ -7,6 +7,14 @@ export function formatStyleProps(styleProps) {
 }
 
 
+export function isAttribute(key) {
+  const attributeWhiteList = [
+    'role'
+  ];
+  return key.match(/-/) || attributeWhiteList.indexOf(key) >= 0;
+}
+
+
 export function mergeDeep(...sources) {
   const output = {};
   sources.forEach(source => {
@@ -26,11 +34,10 @@ export function mergeDeep(...sources) {
 
 export function updateProps(element, props) {
   Object.keys(props).forEach(key => {
-    const isAttribute = key.match(/-/);
     const value = key === 'style' ?
       formatStyleProps(props[key]) :
       props[key];
-    if (isAttribute && element.getAttribute(key) !== value) {
+    if (isAttribute(key) && element.getAttribute(key) !== value) {
       // Update attribute
       element.setAttribute(key, value);
     } else if (element[key] !== value) {
