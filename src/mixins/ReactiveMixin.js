@@ -26,6 +26,11 @@ export default function ReactiveMixin(Base) {
       if (super.render) { super.render(); }
       console.log(`ReactiveMixin: render`);
       updateProps(this, this.hostProps());
+      if (this.componentDidUpdate) {
+        Promise.resolve().then(() => {
+          this.componentDidUpdate();
+        });
+      }
     }
 
     setState(state) {

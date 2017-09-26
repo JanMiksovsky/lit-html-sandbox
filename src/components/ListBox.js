@@ -7,8 +7,11 @@ import DefaultSlotContentMixin from '../mixins/DefaultSlotContentMixin.js';
 import DirectionSelectionMixin from '../mixins/DirectionSelectionMixin.js';
 import KeyboardDirectionMixin from '../mixins/KeyboardDirectionMixin.js';
 import KeyboardMixin from '../mixins/KeyboardMixin.js';
+import KeyboardPagedSelectionMixin from '../mixins/KeyboardPagedSelectionMixin.js';
+import KeyboardPrefixSelectionMixin from '../mixins/KeyboardPrefixSelectionMixin.js';
 import LitHtmlShadowMixin from '../mixins/LitHtmlShadowMixin.js';
 import ReactiveMixin from '../mixins/ReactiveMixin.js';
+import SelectionInViewMixin from '../mixins/SelectionInViewMixin.js';
 import SingleSelectionMixin from '../mixins/SingleSelectionMixin.js';
 
 
@@ -20,11 +23,14 @@ const Base =
   DirectionSelectionMixin(
   KeyboardDirectionMixin(
   KeyboardMixin(
+  KeyboardPagedSelectionMixin(
+  KeyboardPrefixSelectionMixin(
   LitHtmlShadowMixin(
   ReactiveMixin(
+  SelectionInViewMixin(
   SingleSelectionMixin(
     HTMLElement
-  ))))))))));
+  )))))))))))));
 
 
 export default class ListBox extends Base {
