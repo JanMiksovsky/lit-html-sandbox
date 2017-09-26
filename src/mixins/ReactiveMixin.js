@@ -20,7 +20,6 @@ export default function ReactiveMixin(Base) {
 
     render() {
       if (super.render) { super.render(); }
-      console.log(`ReactiveMixin: render`);
       if (this.hostProps) {
         const hostProps = this.hostProps();
         updateProps(this, hostProps);

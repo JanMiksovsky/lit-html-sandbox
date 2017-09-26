@@ -1,5 +1,5 @@
-import { html } from '../../node_modules/lit-html/lit-html.js';
 import { formatStyleProps, mergeDeep } from '../mixins/helpers.js';
+import { html } from '../../node_modules/lit-html/lit-html.js';
 import AttributeMarshallingMixin from '../mixins/AttributeMarshallingMixin.js';
 import ClickSelectionMixin from '../mixins/ClickSelectionMixin.js';
 import ContentItemsMixin from '../mixins/ContentItemsMixin.js';
@@ -51,22 +51,14 @@ export default class ListBox extends Base {
       itemStyle,
       selected && selectedStyle
     );
-    // const className = classnames(
-    //   item.props.className,
-    //   base.className,
-    //   {
-    //     selected
-    //   }
-    // );
-    // return Object.assign(
-    //   {},
-    //   base,
-    //   {
-    //     className,
-    //     style
-    //   }
-    // );
-    return mergeDeep(base, { style });
+    let className;
+    if (selected) {
+      className = `${base.class ? base.class + ' ' : ''}selected`;
+    }
+    return mergeDeep(base, {
+      class: className,
+      style
+    });
   }
 
   get template() {

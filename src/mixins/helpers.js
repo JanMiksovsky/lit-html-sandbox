@@ -9,6 +9,7 @@ export function formatStyleProps(styleProps) {
 
 export function isAttribute(key) {
   const attributeWhiteList = [
+    'class',
     'role'
   ];
   return key.match(/-/) || attributeWhiteList.indexOf(key) >= 0;
@@ -39,7 +40,11 @@ export function updateProps(element, props) {
       props[key];
     if (isAttribute(key) && element.getAttribute(key) !== value) {
       // Update attribute
-      element.setAttribute(key, value);
+      if (value) {
+        element.setAttribute(key, value);
+      } else {
+        element.removeAttribute(key);
+      }
     } else if (element[key] !== value) {
       // Update property
       element[key] = value;
