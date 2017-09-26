@@ -37,6 +37,12 @@ const Base =
 
 export default class ListBox extends Base {
 
+  get defaultState() {
+    return Object.assign({}, super.defaultState, {
+      orientation: 'vertical'
+    });
+  }
+
   itemProps(item, index) {
     const base = super.itemProps ? super.itemProps(item, index) : {};
     const itemStyle = {
@@ -47,7 +53,8 @@ export default class ListBox extends Base {
       'color': 'highlighttext'
     };
     const selected = index === this.state.selectedIndex;
-    const style = mergeDeep(
+    const style = Object.assign(
+      {},
       itemStyle,
       selected && selectedStyle
     );

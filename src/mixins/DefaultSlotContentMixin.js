@@ -2,10 +2,6 @@
 import symbols from './symbols.js';
 
 
-// Symbols for private data members on an element.
-const slotchangeFiredKey = Symbol('slotchangeFired');
-
-
 /**
  * Mixin which defines a component's `symbols.content` property as the flattened
  * set of nodes assigned to its default slot.
@@ -58,18 +54,11 @@ export default function DefaultSlotContentMixin(Base) {
       if (super.connectedCallback) { super.connectedCallback(); }
       // Listen to changes on the default slot.
       const slot = defaultSlot(this);
-      if (slot) {
+      if (slot && this[symbols.contentChanged]) {
         slot.addEventListener('slotchange', event => {
-          this[slotchangeFiredKey] = true;
-          if (this[symbols.contentChanged]) {
-            this[symbols.contentChanged]();
-          }
+          this[symbols.contentChanged]();
         });
       }
-    }
-
-    get content() {
-      return this[symbols.content];
     }
 
     /**

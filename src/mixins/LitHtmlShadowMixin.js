@@ -9,12 +9,11 @@ export default function LitHtmlShadowMixin(Base) {
   return class LitHtmlShadow extends Base {
     render() {
       if (super.render) { super.render(); }
-      // Invoke lit-html to render the shadow subtree.
-      let newShadow = false;
       if (!this.shadowRoot) {
+        // Initial render; create shadow.
         this.attachShadow({ mode: 'open' });
-        newShadow = true;
       }
+      // Invoke lit-html to render the shadow subtree.
       render(this.template, this.shadowRoot);
     }
   }
