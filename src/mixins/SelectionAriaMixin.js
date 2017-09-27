@@ -35,7 +35,7 @@ export default function SelectionAriaMixin(Base) {
 
     hostProps() {
       const base = super.hostProps ? super.hostProps() : {};
-      const selectedItem = this.state.selectedIndex > 0 && this.items ?
+      const selectedItem = this.state.selectedIndex >= 0 && this.items ?
         this.items[this.state.selectedIndex] :
         null;
       const selectedItemId = selectedItem && selectedItem.id;

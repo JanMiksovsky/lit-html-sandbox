@@ -29,7 +29,7 @@ Example: A single-selection list component might support ARIA selection with:
       // Return props/attributes to apply to the component's host element.
       hostProps() {
         const base = super.hostProps ? super.hostProps() : {};
-        const selectedItem = this.state.selectedIndex > 0 && this.state.items ?
+        const selectedItem = this.state.selectedIndex >= 0 && this.state.items ?
           this.state.items[this.state.selectedIndex] :
           null;
         const selectedItemId = selectedItem && selectedItem.id;
