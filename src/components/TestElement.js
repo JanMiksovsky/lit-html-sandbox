@@ -2,13 +2,15 @@ import { html } from '../../node_modules/lit-html/lit-html.js';
 import { formatStyleProps, mergeDeep } from '../mixins/helpers.js';
 import AttributeMarshallingMixin from '../mixins/AttributeMarshallingMixin.js';
 import LitHtmlShadowMixin from '../mixins/LitHtmlShadowMixin.js';
+import ReactiveMixin from '../mixins/ReactiveMixin.js';
 
 
 const Base =
   AttributeMarshallingMixin(
   LitHtmlShadowMixin(
+  ReactiveMixin(
     HTMLElement
-  ));
+  )));
 
 
 /**
