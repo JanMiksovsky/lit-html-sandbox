@@ -1,1 +1,5 @@
-/node_modules/
+# Allow lit-html.js to be checked in for demo purposes.
+node_modules/*
+!node_modules/lit-html
+node_modules/lit-html/*
+!node_modules/lit-html/lit-html.js
