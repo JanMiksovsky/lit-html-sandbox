@@ -2,6 +2,10 @@
 import symbols from './symbols.js';
 
 
+// Symbols for private data members on an element.
+const slotchangeFiredKey = Symbol('slotchangeFired');
+
+
 /**
  * Mixin which defines a component's `symbols.content` property as the flattened
  * set of nodes assigned to its default slot.
@@ -37,7 +41,7 @@ import symbols from './symbols.js';
  * element in its shadow subtree.
  *
  * To receive `contentChanged` notification, this mixin expects a component to
- * invoke a method called `symbols.connectedCallback` after the component's shadow
+ * invoke a method called `symbols.shadowCreated` after the component's shadow
  * root has been created and populated.
  *
  * Most Elix [elements](elements) use `DefaultSlotContentMixin`, including
@@ -52,13 +56,19 @@ export default function DefaultSlotContentMixin(Base) {
 
     connectedCallback() {
       if (super.connectedCallback) { super.connectedCallback(); }
-      // Listen to changes on the default slot.
-      const slot = defaultSlot(this);
-      if (slot && this[symbols.contentChanged]) {
-        slot.addEventListener('slotchange', event => {
-          this[symbols.contentChanged]();
-        });
-      }
+      setTimeout(() => {
+        // Some browsers fire slotchange when the slot's initial nodes are
+        // assigned; others don't. If we haven't already received a slotchange
+        // event by now, then act as if we did so the component can set things
+        // up based on its initial content.
+        if (!this[slotchangeFiredKey]) {
+          // Invoke contentChanged as would have happened on slotchange.
+          this[slotchangeFiredKey] = true;
+          if (this[symbols.contentChanged]) {
+            this[symbols.contentChanged]();
+          }
+        }
+      });
     }
 
     /**
@@ -83,6 +93,18 @@ export default function DefaultSlotContentMixin(Base) {
         assignedNodes = [];
       }
       return assignedNodes;
+    }
+
+    [symbols.shadowCreated]() {
+      if (super[symbols.shadowCreated]) { super[symbols.shadowCreated](); }
+      // Listen to changes on the default slot.
+      const slot = defaultSlot(this);
+      if (slot && this[symbols.contentChanged]) {
+        slot.addEventListener('slotchange', event => {
+          this[slotchangeFiredKey] = true;
+          this[symbols.contentChanged]();
+        });
+      }
     }
 
   }

@@ -46,6 +46,7 @@ export default class TestElement extends Base {
       style: {
         'cursor': 'pointer',
         'font-style': punctuation.match(/!/) ? 'italic' : 'inherit',
+        '-webkit-user-select': 'none',
         'user-select': 'none'
       }
     });
