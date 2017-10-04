@@ -34,9 +34,9 @@ export default class TestElement extends Base {
   }
 
   get defaultState() {
-    return {
+    return Object.assign({}, super.defaultState, {
       punctuation: '.'
-    };
+    });
   }
   
   // These are properties that will be applied to the element's host.

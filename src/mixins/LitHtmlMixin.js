@@ -22,6 +22,21 @@ export default function LitHtmlMixin(Base) {
       }
     }
 
+    connectedCallback() {
+      if (super.connectedCallback) { super.connectedCallback(); }
+      if (!this[initializedKey]) {
+        setTimeout(() => {
+          this.render();
+        });
+      }
+    }
+
+    get defaultState() {
+      return Object.assign({}, super.defaultState, {
+        children: []
+      });
+    }
+
     get innerHTML() {
       if (this[renderingKey]) {
         return super.innerHTML;

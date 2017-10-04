@@ -4,6 +4,16 @@
   "devDependencies": {
     "@webcomponents/custom-elements": "1.0.4",
     "@webcomponents/webcomponentsjs": "1.0.14",
-    "lit-html": "0.6.0"
+    "babel-cli": "6.26.0",
+    "babel-core": "6.26.0",
+    "babel-loader": "7.1.2",
+    "babel-plugin-transform-object-assign": "6.22.0",
+    "babel-preset-env": "1.6.0",
+    "lit-html": "0.6.0",
+    "webpack": "3.6.0"
+  },
+  "scripts": {
+    "build": "webpack",
+    "watch": "webpack --watch"
   }
 }
