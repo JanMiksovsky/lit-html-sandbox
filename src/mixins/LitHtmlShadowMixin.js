@@ -7,8 +7,17 @@ import symbols from './symbols.js';
  */
 export default function LitHtmlShadowMixin(Base) {
   return class LitHtmlShadow extends Base {
+
+    connectedCallback() {
+      if (super.connectedCallback) { super.connectedCallback(); }
+      if (window.ShadyCSS && !window.ShadyCSS.nativeShadow) {
+        window.ShadyCSS.styleElement(this);
+      }
+    }
+
     render() {
       if (super.render) { super.render(); }
+
       let newShadow = false;
       if (!this.shadowRoot) {
         // Initial render; create shadow.
@@ -16,8 +25,18 @@ export default function LitHtmlShadowMixin(Base) {
         newShadow = true;
       }
 
+      const template = this.template;
+      
+      if (newShadow && window.ShadyCSS && !window.ShadyCSS.nativeShadow) {
+        // Let the CSS polyfill do its own initialization.
+        const tag = this.localName;
+        // Get the actual HTMLTemplateElement.
+        const templateElement = template.template.element;
+        window.ShadyCSS.prepareTemplate(templateElement, tag);
+      }
+
       // Invoke lit-html to render the shadow subtree.
-      render(this.template, this.shadowRoot);
+      render(template, this.shadowRoot);
 
       // If we've created a new shadow, let the component do other
       // initialization based on the rendered shadow tree.
@@ -25,5 +44,6 @@ export default function LitHtmlShadowMixin(Base) {
         this[symbols.shadowCreated]();
       }
     }
+
   }
 }
