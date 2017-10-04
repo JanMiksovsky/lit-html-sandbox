@@ -2,6 +2,7 @@
   "name": "lit-html-sandbox",
   "version": "0.0.1",
   "devDependencies": {
+    "@webcomponents/custom-elements": "1.0.4",
     "@webcomponents/webcomponentsjs": "1.0.14",
     "lit-html": "0.6.0"
   }
