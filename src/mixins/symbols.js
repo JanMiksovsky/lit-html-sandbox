@@ -298,6 +298,8 @@ const symbols = {
    */
   raiseChangeEvents: Symbol('raiseChangeEvents'),
 
+  rendering: Symbol('rendering'),
+
   /**
    * Symbol for the `scrollTarget` property.
    *

@@ -1,18 +1,18 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
 import { formatStyleProps, mergeDeep } from '../mixins/helpers.js';
 import AttributeMarshallingMixin from '../mixins/AttributeMarshallingMixin.js';
-// import ChildrenContentMixin from '../mixins/ChildrenContentMixin.js';
+import ChildrenMixin from '../mixins/ChildrenMixin.js';
 import LitHtmlMixin from '../mixins/LitHtmlMixin.js';
 import ReactiveMixin from '../mixins/ReactiveMixin.js';
 
 
 const Base =
   AttributeMarshallingMixin(
-  // ChildrenContentMixin(
+  ChildrenMixin(
   LitHtmlMixin(
   ReactiveMixin(
     HTMLElement
-  )));
+  ))));
 
 
 /**
@@ -70,8 +70,10 @@ export default class TestElement extends Base {
   get template() {
     const hostProps = this.hostProps();
     const rootStyle = formatStyleProps(hostProps.style);
+    const hasContent = this.state.children && this.state.children.length > 0;
+    const comma = hasContent ? ', ' : '';
     const template = html`
-      Hello, ${this.state.children}${this.punctuation}
+      Hello${comma}${this.state.children}${this.punctuation}
     `;
     return template;
   }

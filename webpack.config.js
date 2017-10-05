@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = [{
 
-  entry: './src/components/ChildTest.js',
+  entry: './src/components/TestElement2.js',
 
 	module: {
 		loaders: [
