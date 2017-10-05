@@ -25,9 +25,9 @@ export default function LitHtmlMixin(Base) {
     connectedCallback() {
       if (super.connectedCallback) { super.connectedCallback(); }
       if (!this[initializedKey]) {
-        setTimeout(() => {
+        // setTimeout(() => {
           this.render();
-        });
+        // });
       }
     }
 
