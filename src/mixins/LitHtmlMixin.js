@@ -23,9 +23,8 @@ export default function LitHtmlMixin(Base) {
       if (super.render) { super.render(); }
       
       if (!this[renderedKey]) {
-        const contentLoaded = this.state.children === undefined || this.state.children !== null;
-        if (!contentLoaded) {
-          // Content might be added later; wait to render.
+        if (this.state.content === null) {
+          // State of content is not yet unknown; wait to render.
           console.log(`waiting to render`);
           return;
         }

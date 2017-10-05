@@ -574,9 +574,9 @@ var _AttributeMarshallingMixin = __webpack_require__(3);
 
 var _AttributeMarshallingMixin2 = _interopRequireDefault(_AttributeMarshallingMixin);
 
-var _ChildrenMixin = __webpack_require__(7);
+var _ChildrenContentMixin = __webpack_require__(8);
 
-var _ChildrenMixin2 = _interopRequireDefault(_ChildrenMixin);
+var _ChildrenContentMixin2 = _interopRequireDefault(_ChildrenContentMixin);
 
 var _LitHtmlMixin = __webpack_require__(4);
 
@@ -596,7 +596,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Base = (0, _AttributeMarshallingMixin2.default)((0, _ChildrenMixin2.default)((0, _LitHtmlMixin2.default)((0, _ReactiveMixin2.default)(HTMLElement))));
+var Base = (0, _AttributeMarshallingMixin2.default)((0, _ChildrenContentMixin2.default)((0, _LitHtmlMixin2.default)((0, _ReactiveMixin2.default)(HTMLElement))));
 
 /**
  * A simple web component created with a functional reactive programming (FRP)
@@ -675,9 +675,9 @@ var TestElement = function (_Base) {
     get: function get() {
       var hostProps = this.hostProps();
       var rootStyle = (0, _helpers.formatStyleProps)(hostProps.style);
-      var hasContent = this.state.children && this.state.children.length > 0;
+      var hasContent = this.state.content && this.state.content.length > 0;
       var comma = hasContent ? ', ' : '';
-      var template = (0, _litHtml.html)(_templateObject, comma, this.state.children, this.punctuation);
+      var template = (0, _litHtml.html)(_templateObject, comma, this.state.content, this.punctuation);
       return template;
     }
   }]);
@@ -886,9 +886,8 @@ function LitHtmlMixin(Base) {
         }
 
         if (!this[renderedKey]) {
-          var contentLoaded = this.state.children === undefined || this.state.children !== null;
-          if (!contentLoaded) {
-            // Content might be added later; wait to render.
+          if (this.state.content === null) {
+            // State of content is not yet unknown; wait to render.
             console.log('waiting to render');
             return;
           }
@@ -983,27 +982,6 @@ var symbols = {
    * @param {string} effect - The name of the effect that has completed
    */
   beforeEffect: Symbol('beforeEffect'),
-
-  /**
-   * Symbols for the `content` property.
-   *
-   * This property returns the component's content -- however the component
-   * wants to define that. This could, for example, return the component's
-   * distributed children.
-   *
-   * @type {HTMLElement[]}
-   */
-  content: Symbol('content'),
-
-  /**
-   * Symbol for the `contentChanged` method.
-   *
-   * For components that define a `content` property, this method should be
-   * invoked when that property changes.
-   *
-   * @function contentChanged
-   */
-  contentChanged: Symbol('contentChanged'),
 
   /**
    * The name of the visual effect currently begin shown.
@@ -1362,7 +1340,8 @@ function ReactiveMixin(Base) {
 }
 
 /***/ }),
-/* 7 */
+/* 7 */,
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1378,7 +1357,7 @@ var _set = function set(object, property, value, receiver) { var desc = Object.g
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-exports.default = ChildrenMixin;
+exports.default = ChildrenContentMixin;
 
 var _litHtml = __webpack_require__(0);
 
@@ -1401,27 +1380,27 @@ var initialContentObserverKey = Symbol('initialContentObserver');
 var initialContentTimeoutKey = Symbol('initialContentTimeout');
 
 /**
- * Mixin for rendering a component's light DOM contents using lit-html.
+ * Define a component's content as its light DOM children.
  */
-function ChildrenMixin(Base) {
+function ChildrenContentMixin(Base) {
   return function (_Base) {
-    _inherits(Children, _Base);
+    _inherits(ChildrenContent, _Base);
 
-    function Children() {
-      _classCallCheck(this, Children);
+    function ChildrenContent() {
+      _classCallCheck(this, ChildrenContent);
 
-      return _possibleConstructorReturn(this, (Children.__proto__ || Object.getPrototypeOf(Children)).apply(this, arguments));
+      return _possibleConstructorReturn(this, (ChildrenContent.__proto__ || Object.getPrototypeOf(ChildrenContent)).apply(this, arguments));
     }
 
-    _createClass(Children, [{
+    _createClass(ChildrenContent, [{
       key: 'appendChild',
       value: function appendChild(child) {
         if (this[_symbols2.default.rendering]) {
-          _get(Children.prototype.__proto__ || Object.getPrototypeOf(Children.prototype), 'appendChild', this).call(this, child);
+          _get(ChildrenContent.prototype.__proto__ || Object.getPrototypeOf(ChildrenContent.prototype), 'appendChild', this).call(this, child);
         } else {
           console.log('appendChild ' + child);
-          var children = [].concat(_toConsumableArray(this.state.children), [child]);
-          this.setState({ children: children });
+          var content = [].concat(_toConsumableArray(this.state.content), [child]);
+          this.setState({ content: content });
         }
       }
     }, {
@@ -1429,45 +1408,45 @@ function ChildrenMixin(Base) {
       value: function connectedCallback() {
         var _this2 = this;
 
-        if (_get(Children.prototype.__proto__ || Object.getPrototypeOf(Children.prototype), 'connectedCallback', this)) {
-          _get(Children.prototype.__proto__ || Object.getPrototypeOf(Children.prototype), 'connectedCallback', this).call(this);
+        if (_get(ChildrenContent.prototype.__proto__ || Object.getPrototypeOf(ChildrenContent.prototype), 'connectedCallback', this)) {
+          _get(ChildrenContent.prototype.__proto__ || Object.getPrototypeOf(ChildrenContent.prototype), 'connectedCallback', this).call(this);
         }
         console.log('connectedCallback: ' + this.childNodes.length);
-        if (this.state.children === null) {
+        if (this.state.content === null) {
           // First call to connectedCallback.
           if (this.childNodes.length === 0) {
             // The document may still be parsing.
 
             this[initialContentObserverKey] = new MutationObserver(function () {
               console.log('MutationObserver: ' + _this2.childNodes.length);
-              handleInitialChildren(_this2);
+              extractInitialContent(_this2);
             });
             this[initialContentObserverKey].observe(this, { childList: true });
 
             this[initialContentTimeoutKey] = setTimeout(function () {
               console.log('timeout: ' + _this2.childNodes.length);
-              handleInitialChildren(_this2);
+              extractInitialContent(_this2);
             });
           } else {
             // Already have children.
-            handleInitialChildren(this);
+            extractInitialContent(this);
           }
         }
       }
     }, {
       key: 'defaultState',
       get: function get() {
-        return Object.assign({}, _get(Children.prototype.__proto__ || Object.getPrototypeOf(Children.prototype), 'defaultState', this), {
-          children: null
+        return Object.assign({}, _get(ChildrenContent.prototype.__proto__ || Object.getPrototypeOf(ChildrenContent.prototype), 'defaultState', this), {
+          content: null
         });
       }
     }, {
       key: 'innerHTML',
       get: function get() {
         if (this[_symbols2.default.rendering]) {
-          return _get(Children.prototype.__proto__ || Object.getPrototypeOf(Children.prototype), 'innerHTML', this);
+          return _get(ChildrenContent.prototype.__proto__ || Object.getPrototypeOf(ChildrenContent.prototype), 'innerHTML', this);
         } else {
-          var strings = this.state.children.map(function (o) {
+          var strings = this.state.content.map(function (o) {
             return o instanceof Element ? o.outerHTML : o instanceof Text ? o.textContent : o.toString();
           });
           return strings.join('');
@@ -1475,22 +1454,22 @@ function ChildrenMixin(Base) {
       },
       set: function set(html) {
         if (this[_symbols2.default.rendering]) {
-          _set(Children.prototype.__proto__ || Object.getPrototypeOf(Children.prototype), 'innerHTML', html, this);
+          _set(ChildrenContent.prototype.__proto__ || Object.getPrototypeOf(ChildrenContent.prototype), 'innerHTML', html, this);
         } else {
           var template = document.createElement('template');
           template.innerHTML = html;
-          var children = [].concat(_toConsumableArray(template.content.childNodes));
-          console.log('set innerHTML = ' + children);
-          this.setState({ children: children });
+          var content = [].concat(_toConsumableArray(template.content.childNodes));
+          console.log('set innerHTML = ' + content);
+          this.setState({ content: content });
         }
       }
     }, {
       key: 'textContent',
       get: function get() {
         if (this[_symbols2.default.rendering]) {
-          return _get(Children.prototype.__proto__ || Object.getPrototypeOf(Children.prototype), 'textContent', this);
+          return _get(ChildrenContent.prototype.__proto__ || Object.getPrototypeOf(ChildrenContent.prototype), 'textContent', this);
         } else {
-          var strings = this.state.children.map(function (o) {
+          var strings = this.state.content.map(function (o) {
             return o instanceof Node ? o.textContent : o.toString();
           });
           return strings.join('');
@@ -1498,30 +1477,24 @@ function ChildrenMixin(Base) {
       },
       set: function set(textContent) {
         if (this[_symbols2.default.rendering]) {
-          _set(Children.prototype.__proto__ || Object.getPrototypeOf(Children.prototype), 'textContent', textContent, this);
+          _set(ChildrenContent.prototype.__proto__ || Object.getPrototypeOf(ChildrenContent.prototype), 'textContent', textContent, this);
         } else {
-          var children = textContent.toString();
-          console.log('set textContent = ' + children);
-          this.setState({ children: children });
+          var content = textContent.toString();
+          console.log('set textContent = ' + content);
+          this.setState({ content: content });
         }
       }
     }]);
 
-    return Children;
+    return ChildrenContent;
   }(Base);
 }
 
-function extractChildren(component) {
-  var content = [];
-  while (component.childNodes.length > 0) {
-    content.push(component.childNodes[0]);
-    component.removeChild(component.childNodes[0]);
-  }
-  return content;
-}
+function extractInitialContent(component) {
 
-function handleInitialChildren(component) {
-  console.log('initialize');
+  console.log('extractInitialContent');
+
+  // Stop waiting for any pending notifications.
   if (component[initialContentObserverKey]) {
     component[initialContentObserverKey].disconnect();
     component[initialContentObserverKey] = null;
@@ -1530,8 +1503,17 @@ function handleInitialChildren(component) {
     clearTimeout(component[initialContentTimeoutKey]);
     component[initialContentTimeoutKey] = null;
   }
-  var children = extractChildren(component);
-  component.setState({ children: children });
+
+  // Extract any initial light DOM children as content.
+  var content = [];
+  while (component.childNodes.length > 0) {
+    content.push(component.childNodes[0]);
+    component.removeChild(component.childNodes[0]);
+  }
+
+  // Set the content as state, triggering a render. That will typically render
+  // the content into some new position in the light DOM.
+  component.setState({ content: content });
 }
 
 /***/ })

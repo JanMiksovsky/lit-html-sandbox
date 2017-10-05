@@ -8,49 +8,49 @@ const initialContentTimeoutKey = Symbol('initialContentTimeout');
 
 
 /**
- * Mixin for rendering a component's light DOM contents using lit-html.
+ * Define a component's content as its light DOM children.
  */
-export default function ChildrenMixin(Base) {
-  return class Children extends Base {
+export default function ChildrenContentMixin(Base) {
+  return class ChildrenContent extends Base {
 
     appendChild(child) {
       if (this[symbols.rendering]) {
         super.appendChild(child);
       } else {
         console.log(`appendChild ${child}`);
-        const children = [...this.state.children, child];
-        this.setState({ children });
+        const content = [...this.state.content, child];
+        this.setState({ content });
       }
     }
 
     connectedCallback() {
       if (super.connectedCallback) { super.connectedCallback(); }
       console.log(`connectedCallback: ${this.childNodes.length}`);
-      if (this.state.children === null) {
+      if (this.state.content === null) {
         // First call to connectedCallback.
         if (this.childNodes.length === 0) {
           // The document may still be parsing.
 
           this[initialContentObserverKey] = new MutationObserver(() => {
             console.log(`MutationObserver: ${this.childNodes.length}`);
-            handleInitialChildren(this);
+            extractInitialContent(this);
           });
           this[initialContentObserverKey].observe(this, { childList: true });
 
           this[initialContentTimeoutKey] = setTimeout(() => {
             console.log(`timeout: ${this.childNodes.length}`);
-            handleInitialChildren(this);
+            extractInitialContent(this);
           });
         } else {
           // Already have children.
-          handleInitialChildren(this);
+          extractInitialContent(this);
         }
       }
     }
 
     get defaultState() {
       return Object.assign({}, super.defaultState, {
-        children: null
+        content: null
       });
     }
 
@@ -58,7 +58,7 @@ export default function ChildrenMixin(Base) {
       if (this[symbols.rendering]) {
         return super.innerHTML;
       } else {
-        const strings = this.state.children.map(o =>
+        const strings = this.state.content.map(o =>
           o instanceof Element ?
             o.outerHTML :
             o instanceof Text ?
@@ -74,9 +74,9 @@ export default function ChildrenMixin(Base) {
       } else {
         const template = document.createElement('template');
         template.innerHTML = html;
-        const children = [...template.content.childNodes];
-        console.log(`set innerHTML = ${children}`);
-        this.setState({ children });
+        const content = [...template.content.childNodes];
+        console.log(`set innerHTML = ${content}`);
+        this.setState({ content });
       }
     }
 
@@ -84,7 +84,7 @@ export default function ChildrenMixin(Base) {
       if (this[symbols.rendering]) {
         return super.textContent;
       } else {
-        const strings = this.state.children.map(o =>
+        const strings = this.state.content.map(o =>
           o instanceof Node ? o.textContent : o.toString()
         );
         return strings.join('');
@@ -94,9 +94,9 @@ export default function ChildrenMixin(Base) {
       if (this[symbols.rendering]) {
         super.textContent = textContent;
       } else {
-        const children = textContent.toString();
-        console.log(`set textContent = ${children}`);
-        this.setState({ children });
+        const content = textContent.toString();
+        console.log(`set textContent = ${content}`);
+        this.setState({ content });
       }
     }
 
@@ -104,18 +104,11 @@ export default function ChildrenMixin(Base) {
 }
 
 
-function extractChildren(component) {
-  const content = [];
-  while (component.childNodes.length > 0) {
-    content.push(component.childNodes[0]);
-    component.removeChild(component.childNodes[0]);
-  }
-  return content;
-}
+function extractInitialContent(component) {
 
+  console.log(`extractInitialContent`);
 
-function handleInitialChildren(component) {
-  console.log(`initialize`);
+  // Stop waiting for any pending notifications.
   if (component[initialContentObserverKey]) {
     component[initialContentObserverKey].disconnect();
     component[initialContentObserverKey] = null;
@@ -124,6 +117,15 @@ function handleInitialChildren(component) {
     clearTimeout(component[initialContentTimeoutKey]);
     component[initialContentTimeoutKey] = null;
   }
-  const children = extractChildren(component);
-  component.setState({ children });
+
+  // Extract any initial light DOM children as content.
+  const content = [];
+  while (component.childNodes.length > 0) {
+    content.push(component.childNodes[0]);
+    component.removeChild(component.childNodes[0]);
+  }
+
+  // Set the content as state, triggering a render. That will typically render
+  // the content into some new position in the light DOM.
+  component.setState({ content });
 }
