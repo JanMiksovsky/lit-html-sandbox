@@ -1,18 +1,21 @@
-import { html } from '../../node_modules/lit-html/lit-html.js';
+// import { html } from '../../node_modules/lit-html/lit-html.js';
 import { formatStyleProps, mergeDeep } from '../mixins/helpers.js';
 import AttributeMarshallingMixin from '../mixins/AttributeMarshallingMixin.js';
-import ContentCompatMixin from '../mixins/ContentCompatMixin.js';
-import LitHtmlCompatMixin from '../mixins/LitHtmlCompatMixin.js';
+// import ContentCompatMixin from '../mixins/ContentCompatMixin.js';
+import ChildrenContentMixin from '../mixins/ChildrenContentMixin.js';
+// import LitHtmlCompatMixin from '../mixins/LitHtmlCompatMixin.js';
 import ReactiveMixin from '../mixins/ReactiveMixin.js';
+import symbols from '../mixins/symbols.js';
 
 
 const Base =
   AttributeMarshallingMixin(
-  ContentCompatMixin(
-  LitHtmlCompatMixin(
+  // ContentCompatMixin(
+    ChildrenContentMixin(
+  // LitHtmlCompatMixin(
   ReactiveMixin(
     HTMLElement
-  ))));
+  )));
 
 
 /**
@@ -47,11 +50,34 @@ export default class TestElement extends Base {
     return mergeDeep(super.hostProps && super.hostProps(), {
       style: {
         'cursor': 'pointer',
-        'font-style': punctuation.match(/!/) ? 'italic' : null,
+        'font-style': punctuation.match(/!/) ? 'italic' : 'inherit',
+        '-ms-user-select': 'none',
         '-webkit-user-select': 'none',
         'user-select': 'none',
       }
     });
+  }
+
+  render() {
+    this[symbols.rendering] = true;
+
+    if (this.state.content === null) {
+      return;
+    }
+    
+    if (super.render) { super.render(); }
+    while (this.childNodes.length > 0) {
+      this.removeChild(this.childNodes[0]);
+    }
+    
+    const hasContent = this.state.content && this.state.content.length > 0;
+    const comma = hasContent ? ', ' : '';
+    this.appendChild(document.createTextNode('Hello'));
+    this.appendChild(document.createTextNode(comma));
+    this.state.content.forEach(item => this.appendChild(item));
+    this.appendChild(document.createTextNode(this.punctuation));
+
+    this[symbols.rendering] = false;
   }
 
   // A sample property that updates component state.
@@ -68,8 +94,6 @@ export default class TestElement extends Base {
   // actually does the work of rendering the template initially, and whenever
   // the state changes.
   get template() {
-    const hostProps = this.hostProps();
-    const rootStyle = formatStyleProps(hostProps.style);
     const hasContent = this.state.content && this.state.content.length > 0;
     const comma = hasContent ? ', ' : '';
     const template = html`

@@ -1,4 +1,5 @@
 import { render } from '../../node_modules/lit-html/lit-html.js';
+import Symbol from './Symbol.js';
 import symbols from './symbols.js';
 
 

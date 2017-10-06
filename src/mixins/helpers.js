@@ -19,7 +19,8 @@ export function formatStyleProps(styleProps) {
 export function isAttribute(key) {
   const attributeWhiteList = [
     'class',
-    'role'
+    'role',
+    'style' // for IE 11
   ];
   return key.match(/-/) || attributeWhiteList.indexOf(key) >= 0;
 }

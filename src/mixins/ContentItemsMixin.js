@@ -1,5 +1,5 @@
 import { substantiveElements } from './content.js';
-// import Symbol from './Symbol.js';
+import Symbol from './Symbol.js';
 import symbols from './symbols.js';
 import { updateProps } from '../mixins/helpers.js';
 

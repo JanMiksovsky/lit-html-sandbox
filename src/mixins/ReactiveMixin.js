@@ -1,5 +1,8 @@
-const stateKey = Symbol('state');
+import Symbol from './Symbol.js';
 import { updateProps } from '../mixins/helpers.js';
+
+
+const stateKey = Symbol('state');
 
 
 /**

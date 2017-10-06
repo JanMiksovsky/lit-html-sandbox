@@ -1,5 +1,6 @@
-import { html } from '../../node_modules/lit-html/lit-html.js';
+// import { html } from '../../node_modules/lit-html/lit-html.js';
 // import { repeat } from '../../node_modules/lit-html/lib/repeat.js';
+import Symbol from './Symbol.js';
 import symbols from './symbols.js';
 
 
@@ -101,7 +102,8 @@ export default function ChildrenContentMixin(Base) {
       if (this[symbols.rendering]) {
         super.textContent = textContent;
       } else {
-        const content = textContent.toString();
+        const text = document.createTextNode(textContent.toString());
+        const content = [text];
         // console.log(`set textContent = ${content}`);
         this.setState({ content });
       }
