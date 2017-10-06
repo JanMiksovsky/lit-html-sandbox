@@ -80,6 +80,10 @@ export default function ChildrenContentMixin(Base) {
       }
     }
 
+    renderContent() {
+      return this.state.content;
+    }
+
     get textContent() {
       if (this[symbols.rendering]) {
         return super.textContent;

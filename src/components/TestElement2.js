@@ -73,7 +73,7 @@ export default class TestElement extends Base {
     const hasContent = this.state.content && this.state.content.length > 0;
     const comma = hasContent ? ', ' : '';
     const template = html`
-      Hello${comma}${this.state.content}${this.punctuation}
+      Hello${comma}${this.renderContent()}${this.punctuation}
     `;
     return template;
   }
@@ -86,4 +86,4 @@ export default class TestElement extends Base {
 }
 
 
-customElements.define('test-element', TestElement);
+customElements.define('test-element2', TestElement);

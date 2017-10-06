@@ -22,12 +22,10 @@ export default function LitHtmlMixin(Base) {
     render() {
       if (super.render) { super.render(); }
       
-      if (!this[renderedKey]) {
-        if (this.state.content === null) {
-          // State of content is not yet unknown; wait to render.
-          console.log(`waiting to render`);
-          return;
-        }
+      if (this.state.content === null) {
+        // State of content is not yet unknown; wait to render.
+        console.log(`waiting to render`);
+        return;
       }
       console.log(`rendering`);
       this[renderedKey] = true;

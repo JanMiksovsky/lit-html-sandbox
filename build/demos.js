@@ -60,11 +60,28 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _TestElement = __webpack_require__(7);
+
+var _TestElement2 = _interopRequireDefault(_TestElement);
+
+var _TestElement3 = __webpack_require__(9);
+
+var _TestElement4 = _interopRequireDefault(_TestElement3);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ }),
+/* 1 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -482,7 +499,7 @@ class TemplateInstance {
 //# sourceMappingURL=lit-html.js.map
 
 /***/ }),
-/* 1 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -550,370 +567,7 @@ function updateProps(element, props) {
 }
 
 /***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-
-var _templateObject = _taggedTemplateLiteral(['\n      Hello', '', '', '\n    '], ['\n      Hello', '', '', '\n    ']);
-
-var _litHtml = __webpack_require__(0);
-
-var _helpers = __webpack_require__(1);
-
-var _AttributeMarshallingMixin = __webpack_require__(3);
-
-var _AttributeMarshallingMixin2 = _interopRequireDefault(_AttributeMarshallingMixin);
-
-var _ChildrenContentMixin = __webpack_require__(8);
-
-var _ChildrenContentMixin2 = _interopRequireDefault(_ChildrenContentMixin);
-
-var _LitHtmlMixin = __webpack_require__(4);
-
-var _LitHtmlMixin2 = _interopRequireDefault(_LitHtmlMixin);
-
-var _ReactiveMixin = __webpack_require__(6);
-
-var _ReactiveMixin2 = _interopRequireDefault(_ReactiveMixin);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Base = (0, _AttributeMarshallingMixin2.default)((0, _ChildrenContentMixin2.default)((0, _LitHtmlMixin2.default)((0, _ReactiveMixin2.default)(HTMLElement))));
-
-/**
- * A simple web component created with a functional reactive programming (FRP)
- * style. In this approach, we track component state in a single `state` member,
- * then render that state to DOM. For that task, the component uses lit-html,
- * although other similar libraries could be used instead.
- *
- * The component itself is a trivial "Hello, world" element.
- */
-
-var TestElement = function (_Base) {
-  _inherits(TestElement, _Base);
-
-  function TestElement() {
-    _classCallCheck(this, TestElement);
-
-    // Sample event handler just to show we can respond to events.
-    var _this = _possibleConstructorReturn(this, (TestElement.__proto__ || Object.getPrototypeOf(TestElement)).call(this));
-
-    _this.addEventListener('click', function (event) {
-      _this.togglePunctuation();
-    });
-    return _this;
-  }
-
-  _createClass(TestElement, [{
-    key: 'hostProps',
-
-
-    // These are properties that will be applied to the element's host.
-    // Defining them this way allows other mixins to easily contribute style,
-    // ARIA, and other attributes.
-    value: function hostProps() {
-      var punctuation = this.state.punctuation || '';
-      return (0, _helpers.mergeDeep)(_get(TestElement.prototype.__proto__ || Object.getPrototypeOf(TestElement.prototype), 'hostProps', this) && _get(TestElement.prototype.__proto__ || Object.getPrototypeOf(TestElement.prototype), 'hostProps', this).call(this), {
-        style: {
-          'cursor': 'pointer',
-          'font-style': punctuation.match(/!/) ? 'italic' : null,
-          '-webkit-user-select': 'none',
-          'user-select': 'none'
-        }
-      });
-    }
-
-    // A sample property that updates component state.
-
-  }, {
-    key: 'togglePunctuation',
-    value: function togglePunctuation() {
-      this.punctuation = this.punctuation === '.' ? '!' : '.';
-    }
-  }, {
-    key: 'defaultState',
-    get: function get() {
-      return Object.assign({}, _get(TestElement.prototype.__proto__ || Object.getPrototypeOf(TestElement.prototype), 'defaultState', this), {
-        punctuation: '.'
-      });
-    }
-  }, {
-    key: 'punctuation',
-    get: function get() {
-      return this.state.punctuation;
-    },
-    set: function set(punctuation) {
-      this.setState({ punctuation: punctuation });
-    }
-
-    // Define a template that will be used to populate the shadow subtree.
-    // This is fairly conventional FRP stuff: map component state (`this.state`)
-    // to DOM. Here we do that via lit-html. The `LitHtmlMixin` mixin
-    // actually does the work of rendering the template initially, and whenever
-    // the state changes.
-
-  }, {
-    key: 'template',
-    get: function get() {
-      var hostProps = this.hostProps();
-      var rootStyle = (0, _helpers.formatStyleProps)(hostProps.style);
-      var hasContent = this.state.content && this.state.content.length > 0;
-      var comma = hasContent ? ', ' : '';
-      var template = (0, _litHtml.html)(_templateObject, comma, this.state.content, this.punctuation);
-      return template;
-    }
-  }]);
-
-  return TestElement;
-}(Base);
-
-exports.default = TestElement;
-
-
-customElements.define('test-element', TestElement);
-
-/***/ }),
 /* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-
-exports.default = AttributeMarshallingMixin;
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-// Memoized maps of attribute to property names and vice versa.
-var attributeToPropertyNames = {};
-var propertyNamesToAttributes = {};
-
-function AttributeMarshallingMixin(Base) {
-  return function (_Base) {
-    _inherits(AttributeMarshalling, _Base);
-
-    function AttributeMarshalling() {
-      _classCallCheck(this, AttributeMarshalling);
-
-      return _possibleConstructorReturn(this, (AttributeMarshalling.__proto__ || Object.getPrototypeOf(AttributeMarshalling)).apply(this, arguments));
-    }
-
-    _createClass(AttributeMarshalling, [{
-      key: 'attributeChangedCallback',
-
-      /**
-       * Handle a change to the attribute with the given name.
-       */
-      value: function attributeChangedCallback(attributeName, oldValue, newValue) {
-        if (_get(AttributeMarshalling.prototype.__proto__ || Object.getPrototypeOf(AttributeMarshalling.prototype), 'attributeChangedCallback', this)) {
-          _get(AttributeMarshalling.prototype.__proto__ || Object.getPrototypeOf(AttributeMarshalling.prototype), 'attributeChangedCallback', this).call(this);
-        }
-        var propertyName = attributeToPropertyName(attributeName);
-        // If the attribute name corresponds to a property name, set the property.
-        if (propertyName in this) {
-          this[propertyName] = newValue;
-        }
-      }
-    }], [{
-      key: 'observedAttributes',
-      get: function get() {
-        return attributesForClass(this);
-      }
-    }]);
-
-    return AttributeMarshalling;
-  }(Base);
-}
-
-/**
- * Return the custom attributes for the given class.
- */
-function attributesForClass(classFn) {
-
-  // We treat the HTMLElement base class as if it has no attributes, since we
-  // don't want to receive attributeChangedCallback for it. We'd like to do
-  // a simple check if classFn === HTMLElement, but this fails in the polyfill
-  // under IE, so we compare prototypes instead.
-  if (classFn.prototype === HTMLElement.prototype) {
-    return [];
-  }
-
-  // Get attributes for parent class.
-  var baseClass = Object.getPrototypeOf(classFn.prototype).constructor;
-  // See if parent class defines observedAttributes manually.
-  var baseAttributes = baseClass.observedAttributes;
-  if (!baseAttributes) {
-    // Calculate parent class attributes ourselves.
-    baseAttributes = attributesForClass(baseClass);
-  }
-
-  // Get attributes for this class.
-  var propertyNames = Object.getOwnPropertyNames(classFn.prototype);
-  var setterNames = propertyNames.filter(function (propertyName) {
-    return typeof Object.getOwnPropertyDescriptor(classFn.prototype, propertyName).set === 'function';
-  });
-  var attributes = setterNames.map(function (setterName) {
-    return propertyNameToAttribute(setterName);
-  });
-
-  // Merge.
-  var diff = attributes.filter(function (attribute) {
-    return baseAttributes.indexOf(attribute) < 0;
-  });
-  return baseAttributes.concat(diff);
-}
-
-/**
- * Convert hyphenated foo-bar attribute name to camel case fooBar property name.
- */
-function attributeToPropertyName(attributeName) {
-  var propertyName = attributeToPropertyNames[attributeName];
-  if (!propertyName) {
-    // Convert and memoize.
-    var hyphenRegEx = /-([a-z])/g;
-    propertyName = attributeName.replace(hyphenRegEx, function (match) {
-      return match[1].toUpperCase();
-    });
-    attributeToPropertyNames[attributeName] = propertyName;
-  }
-  return propertyName;
-}
-
-/**
- * Convert a camel case fooBar property name to a hyphenated foo-bar attribute.
- */
-function propertyNameToAttribute(propertyName) {
-  var attribute = propertyNamesToAttributes[propertyName];
-  if (!attribute) {
-    // Convert and memoize.
-    var uppercaseRegEx = /([A-Z])/g;
-    attribute = propertyName.replace(uppercaseRegEx, '-$1').toLowerCase();
-  }
-  return attribute;
-}
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-
-exports.default = LitHtmlMixin;
-
-var _litHtml = __webpack_require__(0);
-
-var _symbols = __webpack_require__(5);
-
-var _symbols2 = _interopRequireDefault(_symbols);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var renderedKey = Symbol('initialized');
-
-/**
- * Mixin for rendering a component's light DOM contents using lit-html.
- */
-function LitHtmlMixin(Base) {
-  return function (_Base) {
-    _inherits(LitHtml, _Base);
-
-    function LitHtml() {
-      _classCallCheck(this, LitHtml);
-
-      return _possibleConstructorReturn(this, (LitHtml.__proto__ || Object.getPrototypeOf(LitHtml)).apply(this, arguments));
-    }
-
-    _createClass(LitHtml, [{
-      key: 'connectedCallback',
-      value: function connectedCallback() {
-        if (_get(LitHtml.prototype.__proto__ || Object.getPrototypeOf(LitHtml.prototype), 'connectedCallback', this)) {
-          _get(LitHtml.prototype.__proto__ || Object.getPrototypeOf(LitHtml.prototype), 'connectedCallback', this).call(this);
-        }
-        // If we haven't rendered yet, do so now.
-        if (!this[renderedKey]) {
-          this.render();
-        }
-      }
-    }, {
-      key: 'render',
-      value: function render() {
-        if (_get(LitHtml.prototype.__proto__ || Object.getPrototypeOf(LitHtml.prototype), 'render', this)) {
-          _get(LitHtml.prototype.__proto__ || Object.getPrototypeOf(LitHtml.prototype), 'render', this).call(this);
-        }
-
-        if (!this[renderedKey]) {
-          if (this.state.content === null) {
-            // State of content is not yet unknown; wait to render.
-            console.log('waiting to render');
-            return;
-          }
-        }
-        console.log('rendering');
-        this[renderedKey] = true;
-
-        // Invoke lit-html to render the shadow subtree.
-        this[_symbols2.default.rendering] = true;
-        (0, _litHtml.render)(this.template, this);
-        this[_symbols2.default.rendering] = false;
-
-        // If we've created a new shadow, let the component do other
-        // initialization based on the rendered shadow tree.
-        // if (newShadow && this[symbols.shadowCreated]) {
-        //   this[symbols.shadowCreated]();
-        // }
-      }
-    }]);
-
-    return LitHtml;
-  }(Base);
-}
-
-/***/ }),
-/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1252,6 +906,226 @@ var symbols = {
 exports.default = symbols;
 
 /***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+exports.default = AttributeMarshallingMixin;
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+// Memoized maps of attribute to property names and vice versa.
+var attributeToPropertyNames = {};
+var propertyNamesToAttributes = {};
+
+function AttributeMarshallingMixin(Base) {
+  return function (_Base) {
+    _inherits(AttributeMarshalling, _Base);
+
+    function AttributeMarshalling() {
+      _classCallCheck(this, AttributeMarshalling);
+
+      return _possibleConstructorReturn(this, (AttributeMarshalling.__proto__ || Object.getPrototypeOf(AttributeMarshalling)).apply(this, arguments));
+    }
+
+    _createClass(AttributeMarshalling, [{
+      key: 'attributeChangedCallback',
+
+      /**
+       * Handle a change to the attribute with the given name.
+       */
+      value: function attributeChangedCallback(attributeName, oldValue, newValue) {
+        if (_get(AttributeMarshalling.prototype.__proto__ || Object.getPrototypeOf(AttributeMarshalling.prototype), 'attributeChangedCallback', this)) {
+          _get(AttributeMarshalling.prototype.__proto__ || Object.getPrototypeOf(AttributeMarshalling.prototype), 'attributeChangedCallback', this).call(this);
+        }
+        var propertyName = attributeToPropertyName(attributeName);
+        // If the attribute name corresponds to a property name, set the property.
+        if (propertyName in this) {
+          this[propertyName] = newValue;
+        }
+      }
+    }], [{
+      key: 'observedAttributes',
+      get: function get() {
+        return attributesForClass(this);
+      }
+    }]);
+
+    return AttributeMarshalling;
+  }(Base);
+}
+
+/**
+ * Return the custom attributes for the given class.
+ */
+function attributesForClass(classFn) {
+
+  // We treat the HTMLElement base class as if it has no attributes, since we
+  // don't want to receive attributeChangedCallback for it. We'd like to do
+  // a simple check if classFn === HTMLElement, but this fails in the polyfill
+  // under IE, so we compare prototypes instead.
+  if (classFn.prototype === HTMLElement.prototype) {
+    return [];
+  }
+
+  // Get attributes for parent class.
+  var baseClass = Object.getPrototypeOf(classFn.prototype).constructor;
+  // See if parent class defines observedAttributes manually.
+  var baseAttributes = baseClass.observedAttributes;
+  if (!baseAttributes) {
+    // Calculate parent class attributes ourselves.
+    baseAttributes = attributesForClass(baseClass);
+  }
+
+  // Get attributes for this class.
+  var propertyNames = Object.getOwnPropertyNames(classFn.prototype);
+  var setterNames = propertyNames.filter(function (propertyName) {
+    return typeof Object.getOwnPropertyDescriptor(classFn.prototype, propertyName).set === 'function';
+  });
+  var attributes = setterNames.map(function (setterName) {
+    return propertyNameToAttribute(setterName);
+  });
+
+  // Merge.
+  var diff = attributes.filter(function (attribute) {
+    return baseAttributes.indexOf(attribute) < 0;
+  });
+  return baseAttributes.concat(diff);
+}
+
+/**
+ * Convert hyphenated foo-bar attribute name to camel case fooBar property name.
+ */
+function attributeToPropertyName(attributeName) {
+  var propertyName = attributeToPropertyNames[attributeName];
+  if (!propertyName) {
+    // Convert and memoize.
+    var hyphenRegEx = /-([a-z])/g;
+    propertyName = attributeName.replace(hyphenRegEx, function (match) {
+      return match[1].toUpperCase();
+    });
+    attributeToPropertyNames[attributeName] = propertyName;
+  }
+  return propertyName;
+}
+
+/**
+ * Convert a camel case fooBar property name to a hyphenated foo-bar attribute.
+ */
+function propertyNameToAttribute(propertyName) {
+  var attribute = propertyNamesToAttributes[propertyName];
+  if (!attribute) {
+    // Convert and memoize.
+    var uppercaseRegEx = /([A-Z])/g;
+    attribute = propertyName.replace(uppercaseRegEx, '-$1').toLowerCase();
+  }
+  return attribute;
+}
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+exports.default = LitHtmlMixin;
+
+var _litHtml = __webpack_require__(1);
+
+var _symbols = __webpack_require__(3);
+
+var _symbols2 = _interopRequireDefault(_symbols);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var renderedKey = Symbol('initialized');
+
+/**
+ * Mixin for rendering a component's light DOM contents using lit-html.
+ */
+function LitHtmlMixin(Base) {
+  return function (_Base) {
+    _inherits(LitHtml, _Base);
+
+    function LitHtml() {
+      _classCallCheck(this, LitHtml);
+
+      return _possibleConstructorReturn(this, (LitHtml.__proto__ || Object.getPrototypeOf(LitHtml)).apply(this, arguments));
+    }
+
+    _createClass(LitHtml, [{
+      key: 'connectedCallback',
+      value: function connectedCallback() {
+        if (_get(LitHtml.prototype.__proto__ || Object.getPrototypeOf(LitHtml.prototype), 'connectedCallback', this)) {
+          _get(LitHtml.prototype.__proto__ || Object.getPrototypeOf(LitHtml.prototype), 'connectedCallback', this).call(this);
+        }
+        // If we haven't rendered yet, do so now.
+        if (!this[renderedKey]) {
+          this.render();
+        }
+      }
+    }, {
+      key: 'render',
+      value: function render() {
+        if (_get(LitHtml.prototype.__proto__ || Object.getPrototypeOf(LitHtml.prototype), 'render', this)) {
+          _get(LitHtml.prototype.__proto__ || Object.getPrototypeOf(LitHtml.prototype), 'render', this).call(this);
+        }
+
+        if (this.state.content === null) {
+          // State of content is not yet unknown; wait to render.
+          console.log('waiting to render');
+          return;
+        }
+        console.log('rendering');
+        this[renderedKey] = true;
+
+        // Invoke lit-html to render the shadow subtree.
+        this[_symbols2.default.rendering] = true;
+        (0, _litHtml.render)(this.template, this);
+        this[_symbols2.default.rendering] = false;
+
+        // If we've created a new shadow, let the component do other
+        // initialization based on the rendered shadow tree.
+        // if (newShadow && this[symbols.shadowCreated]) {
+        //   this[symbols.shadowCreated]();
+        // }
+      }
+    }]);
+
+    return LitHtml;
+  }(Base);
+}
+
+/***/ }),
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1268,7 +1142,7 @@ var _get = function get(object, property, receiver) { if (object === null) objec
 
 exports.default = ReactiveMixin;
 
-var _helpers = __webpack_require__(1);
+var _helpers = __webpack_require__(2);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1340,8 +1214,474 @@ function ReactiveMixin(Base) {
 }
 
 /***/ }),
-/* 7 */,
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _templateObject = _taggedTemplateLiteral(['\n      Hello', '', '', '\n    '], ['\n      Hello', '', '', '\n    ']);
+
+var _litHtml = __webpack_require__(1);
+
+var _helpers = __webpack_require__(2);
+
+var _AttributeMarshallingMixin = __webpack_require__(4);
+
+var _AttributeMarshallingMixin2 = _interopRequireDefault(_AttributeMarshallingMixin);
+
+var _DefaultSlotContentMixin = __webpack_require__(8);
+
+var _DefaultSlotContentMixin2 = _interopRequireDefault(_DefaultSlotContentMixin);
+
+var _LitHtmlShadowMixin = __webpack_require__(11);
+
+var _LitHtmlShadowMixin2 = _interopRequireDefault(_LitHtmlShadowMixin);
+
+var _ReactiveMixin = __webpack_require__(6);
+
+var _ReactiveMixin2 = _interopRequireDefault(_ReactiveMixin);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Base = (0, _AttributeMarshallingMixin2.default)((0, _DefaultSlotContentMixin2.default)((0, _LitHtmlShadowMixin2.default)((0, _ReactiveMixin2.default)(HTMLElement))));
+
+/**
+ * A simple web component created with a functional reactive programming (FRP)
+ * style. In this approach, we track component state in a single `state` member,
+ * then render that state to DOM. For that task, the component uses lit-html,
+ * although other similar libraries could be used instead.
+ *
+ * The component itself is a trivial "Hello, world" element.
+ */
+
+var TestElement = function (_Base) {
+  _inherits(TestElement, _Base);
+
+  function TestElement() {
+    _classCallCheck(this, TestElement);
+
+    // Sample event handler just to show we can respond to events.
+    var _this = _possibleConstructorReturn(this, (TestElement.__proto__ || Object.getPrototypeOf(TestElement)).call(this));
+
+    _this.addEventListener('click', function (event) {
+      _this.togglePunctuation();
+    });
+    return _this;
+  }
+
+  _createClass(TestElement, [{
+    key: 'hostProps',
+
+
+    // These are properties that will be applied to the element's host.
+    // Defining them this way allows other mixins to easily contribute style,
+    // ARIA, and other attributes.
+    value: function hostProps() {
+      var punctuation = this.state.punctuation || '';
+      return (0, _helpers.mergeDeep)(_get(TestElement.prototype.__proto__ || Object.getPrototypeOf(TestElement.prototype), 'hostProps', this) && _get(TestElement.prototype.__proto__ || Object.getPrototypeOf(TestElement.prototype), 'hostProps', this).call(this), {
+        style: {
+          'cursor': 'pointer',
+          'font-style': punctuation.match(/!/) ? 'italic' : null,
+          '-webkit-user-select': 'none',
+          'user-select': 'none'
+        }
+      });
+    }
+
+    // A sample property that updates component state.
+
+  }, {
+    key: 'togglePunctuation',
+    value: function togglePunctuation() {
+      this.punctuation = this.punctuation === '.' ? '!' : '.';
+    }
+  }, {
+    key: 'defaultState',
+    get: function get() {
+      return Object.assign({}, _get(TestElement.prototype.__proto__ || Object.getPrototypeOf(TestElement.prototype), 'defaultState', this), {
+        punctuation: '.'
+      });
+    }
+  }, {
+    key: 'punctuation',
+    get: function get() {
+      return this.state.punctuation;
+    },
+    set: function set(punctuation) {
+      this.setState({ punctuation: punctuation });
+    }
+
+    // Define a template that will be used to populate the shadow subtree.
+    // This is fairly conventional FRP stuff: map component state (`this.state`)
+    // to DOM. Here we do that via lit-html. The `LitHtmlMixin` mixin
+    // actually does the work of rendering the template initially, and whenever
+    // the state changes.
+
+  }, {
+    key: 'template',
+    get: function get() {
+      var hostProps = this.hostProps();
+      var rootStyle = (0, _helpers.formatStyleProps)(hostProps.style);
+      var hasContent = this.state.content && this.state.content.length > 0;
+      var comma = hasContent ? ', ' : '';
+      var template = (0, _litHtml.html)(_templateObject, comma, this.renderContent(), this.punctuation);
+      return template;
+    }
+  }]);
+
+  return TestElement;
+}(Base);
+
+exports.default = TestElement;
+
+
+customElements.define('test-element', TestElement);
+
+/***/ }),
 /* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _templateObject = _taggedTemplateLiteral(['<slot></slot>'], ['<slot></slot>']);
+
+exports.default = DefaultSlotContentMixin;
+
+var _litHtml = __webpack_require__(1);
+
+var _symbols = __webpack_require__(3);
+
+var _symbols2 = _interopRequireDefault(_symbols);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+// import Symbol from './Symbol.js';
+
+
+// Symbols for private data members on an element.
+var slotchangeFiredKey = Symbol('slotchangeFired');
+
+/**
+ * Mixin which defines a component's `symbols.content` property as the flattened
+ * set of nodes assigned to its default slot.
+ *
+ * This also provides notification of changes to a component's content. It
+ * will invoke a `symbols.contentChanged` method when the component is first
+ * instantiated, and whenever its distributed children change. This is intended
+ * to satisfy the Gold Standard checklist item for monitoring
+ * [Content Changes](https://github.com/webcomponents/gold-standard/wiki/Content-Changes).
+ *
+ * Example:
+ *
+ * ```
+ * class CountingElement extends DefaultSlotContentMixin(HTMLElement) {
+ *
+ *   constructor() {
+ *     super();
+ *     let root = this.attachShadow({ mode: 'open' });
+ *     root.innerHTML = `<slot></slot>`;
+ *     thisconnectedCallback();
+ *   }
+ *
+ *   [symbols.contentChanged]() {
+ *     if (super[symbols.contentChanged]) { super[symbols.contentChanged](); }
+ *     // Count the component's children, both initially and when changed.
+ *     this.count = this.distributedChildren.length;
+ *   }
+ *
+ * }
+ * ```
+ *
+ * To use this mixin, the component should define a default (unnamed) `slot`
+ * element in its shadow subtree.
+ *
+ * To receive `contentChanged` notification, this mixin expects a component to
+ * invoke a method called `symbols.shadowCreated` after the component's shadow
+ * root has been created and populated.
+ *
+ * Most Elix [elements](elements) use `DefaultSlotContentMixin`, including
+ * [ListBox](ListBox), [Modes](Modes), and [Tabs](Tabs).
+ *
+ * @module DefaultSlotContentMixin
+ */
+function DefaultSlotContentMixin(Base) {
+
+  // The class prototype added by the mixin.
+  var DefaultSlotContent = function (_Base) {
+    _inherits(DefaultSlotContent, _Base);
+
+    function DefaultSlotContent() {
+      _classCallCheck(this, DefaultSlotContent);
+
+      return _possibleConstructorReturn(this, (DefaultSlotContent.__proto__ || Object.getPrototypeOf(DefaultSlotContent)).apply(this, arguments));
+    }
+
+    _createClass(DefaultSlotContent, [{
+      key: 'connectedCallback',
+      value: function connectedCallback() {
+        if (_get(DefaultSlotContent.prototype.__proto__ || Object.getPrototypeOf(DefaultSlotContent.prototype), 'connectedCallback', this)) {
+          _get(DefaultSlotContent.prototype.__proto__ || Object.getPrototypeOf(DefaultSlotContent.prototype), 'connectedCallback', this).call(this);
+        }
+        // setTimeout(() => {
+        // Some browsers fire slotchange when the slot's initial nodes are
+        // assigned; others don't. If we haven't already received a slotchange
+        // event by now, then act as if we did so the component can set things
+        // up based on its initial content.
+        if (!this[slotchangeFiredKey]) {
+          // Invoke contentChanged as would have happened on slotchange.
+          console.log('connectedCallback');
+          this[slotchangeFiredKey] = true;
+          assignedNodesChanged(this);
+        }
+        // });
+      }
+    }, {
+      key: 'renderContent',
+      value: function renderContent() {
+        return (0, _litHtml.html)(_templateObject);
+      }
+    }, {
+      key: _symbols2.default.shadowCreated,
+      value: function value() {
+        var _this2 = this;
+
+        if (_get(DefaultSlotContent.prototype.__proto__ || Object.getPrototypeOf(DefaultSlotContent.prototype), _symbols2.default.shadowCreated, this)) {
+          _get(DefaultSlotContent.prototype.__proto__ || Object.getPrototypeOf(DefaultSlotContent.prototype), _symbols2.default.shadowCreated, this).call(this);
+        }
+        // Listen to changes on the default slot.
+        var slot = defaultSlot(this);
+        if (slot && this[_symbols2.default.contentChanged]) {
+          slot.addEventListener('slotchange', function (event) {
+            console.log('slotchange');
+            _this2[slotchangeFiredKey] = true;
+            assignedNodesChanged(_this2);
+          });
+        }
+      }
+    }, {
+      key: 'defaultState',
+      get: function get() {
+        return Object.assign({}, _get(DefaultSlotContent.prototype.__proto__ || Object.getPrototypeOf(DefaultSlotContent.prototype), 'defaultState', this), {
+          content: null
+        });
+      }
+    }]);
+
+    return DefaultSlotContent;
+  }(Base);
+
+  return DefaultSlotContent;
+}
+
+/**
+ * The content of this component, defined to be the flattened set of
+ * nodes assigned to its default unnamed slot.
+ *
+ * @type {Element[]}
+ */
+function assignedNodesChanged(component) {
+
+  var slot = defaultSlot(component);
+  var content = void 0;
+
+  // As of 18 July 2017, the polyfill contains a bug
+  // (https://github.com/webcomponents/shadydom/issues/165)
+  // that throws an exception if assignedNodes is read during a constructor
+  // Until that bug is fixed, we work around the problem by catching the
+  // exception.
+  try {
+    content = slot ? slot.assignedNodes({ flatten: true }) : [];
+  } catch (e) {
+    content = [];
+  }
+
+  component.setState({ content: content });
+}
+
+function defaultSlot(element) {
+  var defaultSlot = element.shadowRoot && element.shadowRoot.querySelector('slot:not([name])');
+  if (element.shadowRoot && !defaultSlot) {
+    console.warn('DefaultSlotContentMixin expects a component to define a shadow tree that includes a default (unnamed) slot.');
+  }
+  return defaultSlot;
+}
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _templateObject = _taggedTemplateLiteral(['\n      Hello', '', '', '\n    '], ['\n      Hello', '', '', '\n    ']);
+
+var _litHtml = __webpack_require__(1);
+
+var _helpers = __webpack_require__(2);
+
+var _AttributeMarshallingMixin = __webpack_require__(4);
+
+var _AttributeMarshallingMixin2 = _interopRequireDefault(_AttributeMarshallingMixin);
+
+var _ChildrenContentMixin = __webpack_require__(10);
+
+var _ChildrenContentMixin2 = _interopRequireDefault(_ChildrenContentMixin);
+
+var _LitHtmlMixin = __webpack_require__(5);
+
+var _LitHtmlMixin2 = _interopRequireDefault(_LitHtmlMixin);
+
+var _ReactiveMixin = __webpack_require__(6);
+
+var _ReactiveMixin2 = _interopRequireDefault(_ReactiveMixin);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Base = (0, _AttributeMarshallingMixin2.default)((0, _ChildrenContentMixin2.default)((0, _LitHtmlMixin2.default)((0, _ReactiveMixin2.default)(HTMLElement))));
+
+/**
+ * A simple web component created with a functional reactive programming (FRP)
+ * style. In this approach, we track component state in a single `state` member,
+ * then render that state to DOM. For that task, the component uses lit-html,
+ * although other similar libraries could be used instead.
+ *
+ * The component itself is a trivial "Hello, world" element.
+ */
+
+var TestElement = function (_Base) {
+  _inherits(TestElement, _Base);
+
+  function TestElement() {
+    _classCallCheck(this, TestElement);
+
+    // Sample event handler just to show we can respond to events.
+    var _this = _possibleConstructorReturn(this, (TestElement.__proto__ || Object.getPrototypeOf(TestElement)).call(this));
+
+    _this.addEventListener('click', function (event) {
+      _this.togglePunctuation();
+    });
+    return _this;
+  }
+
+  _createClass(TestElement, [{
+    key: 'hostProps',
+
+
+    // These are properties that will be applied to the element's host.
+    // Defining them this way allows other mixins to easily contribute style,
+    // ARIA, and other attributes.
+    value: function hostProps() {
+      var punctuation = this.state.punctuation || '';
+      return (0, _helpers.mergeDeep)(_get(TestElement.prototype.__proto__ || Object.getPrototypeOf(TestElement.prototype), 'hostProps', this) && _get(TestElement.prototype.__proto__ || Object.getPrototypeOf(TestElement.prototype), 'hostProps', this).call(this), {
+        style: {
+          'cursor': 'pointer',
+          'font-style': punctuation.match(/!/) ? 'italic' : null,
+          '-webkit-user-select': 'none',
+          'user-select': 'none'
+        }
+      });
+    }
+
+    // A sample property that updates component state.
+
+  }, {
+    key: 'togglePunctuation',
+    value: function togglePunctuation() {
+      this.punctuation = this.punctuation === '.' ? '!' : '.';
+    }
+  }, {
+    key: 'defaultState',
+    get: function get() {
+      return Object.assign({}, _get(TestElement.prototype.__proto__ || Object.getPrototypeOf(TestElement.prototype), 'defaultState', this), {
+        punctuation: '.'
+      });
+    }
+  }, {
+    key: 'punctuation',
+    get: function get() {
+      return this.state.punctuation;
+    },
+    set: function set(punctuation) {
+      this.setState({ punctuation: punctuation });
+    }
+
+    // Define a template that will be used to populate the shadow subtree.
+    // This is fairly conventional FRP stuff: map component state (`this.state`)
+    // to DOM. Here we do that via lit-html. The `LitHtmlMixin` mixin
+    // actually does the work of rendering the template initially, and whenever
+    // the state changes.
+
+  }, {
+    key: 'template',
+    get: function get() {
+      var hostProps = this.hostProps();
+      var rootStyle = (0, _helpers.formatStyleProps)(hostProps.style);
+      var hasContent = this.state.content && this.state.content.length > 0;
+      var comma = hasContent ? ', ' : '';
+      var template = (0, _litHtml.html)(_templateObject, comma, this.renderContent(), this.punctuation);
+      return template;
+    }
+  }]);
+
+  return TestElement;
+}(Base);
+
+exports.default = TestElement;
+
+
+customElements.define('test-element2', TestElement);
+
+/***/ }),
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1359,9 +1699,9 @@ var _get = function get(object, property, receiver) { if (object === null) objec
 
 exports.default = ChildrenContentMixin;
 
-var _litHtml = __webpack_require__(0);
+var _litHtml = __webpack_require__(1);
 
-var _symbols = __webpack_require__(5);
+var _symbols = __webpack_require__(3);
 
 var _symbols2 = _interopRequireDefault(_symbols);
 
@@ -1432,6 +1772,11 @@ function ChildrenContentMixin(Base) {
             extractInitialContent(this);
           }
         }
+      }
+    }, {
+      key: 'renderContent',
+      value: function renderContent() {
+        return this.state.content;
       }
     }, {
       key: 'defaultState',
@@ -1514,6 +1859,98 @@ function extractInitialContent(component) {
   // Set the content as state, triggering a render. That will typically render
   // the content into some new position in the light DOM.
   component.setState({ content: content });
+}
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+exports.default = LitHtmlShadowMixin;
+
+var _litHtml = __webpack_require__(1);
+
+var _symbols = __webpack_require__(3);
+
+var _symbols2 = _interopRequireDefault(_symbols);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+/**
+ * Mixin for rendering a component's Shadow DOM using lit-html.
+ */
+function LitHtmlShadowMixin(Base) {
+  return function (_Base) {
+    _inherits(LitHtmlShadow, _Base);
+
+    function LitHtmlShadow() {
+      _classCallCheck(this, LitHtmlShadow);
+
+      return _possibleConstructorReturn(this, (LitHtmlShadow.__proto__ || Object.getPrototypeOf(LitHtmlShadow)).apply(this, arguments));
+    }
+
+    _createClass(LitHtmlShadow, [{
+      key: 'render',
+
+
+      // connectedCallback() {
+      //   if (super.connectedCallback) { super.connectedCallback(); }
+      //   if (window.ShadyCSS && !window.ShadyCSS.nativeShadow) {
+      //     window.ShadyCSS.styleElement(this);
+      //   }
+      // }
+
+      value: function render() {
+        if (_get(LitHtmlShadow.prototype.__proto__ || Object.getPrototypeOf(LitHtmlShadow.prototype), 'render', this)) {
+          _get(LitHtmlShadow.prototype.__proto__ || Object.getPrototypeOf(LitHtmlShadow.prototype), 'render', this).call(this);
+        }
+
+        var newShadow = false;
+        if (!this.shadowRoot) {
+          // Initial render; create shadow.
+          this.attachShadow({ mode: 'open' });
+          newShadow = true;
+        }
+
+        var template = this.template;
+
+        // if (newShadow && window.ShadyCSS && !window.ShadyCSS.nativeShadow) {
+        //   // Let the CSS polyfill do its own initialization.
+        //   const tag = this.localName;
+        //   // Get the actual HTMLTemplateElement.
+        //   const templateElement = template.template.element;
+        //   window.ShadyCSS.prepareTemplate(templateElement, tag);
+        // }
+
+        // Invoke lit-html to render the shadow subtree.
+        (0, _litHtml.render)(template, this.shadowRoot);
+
+        // If we've created a new shadow, let the component do other
+        // initialization based on the rendered shadow tree.
+        if (newShadow && this[_symbols2.default.shadowCreated]) {
+          this[_symbols2.default.shadowCreated]();
+        }
+      }
+    }]);
+
+    return LitHtmlShadow;
+  }(Base);
 }
 
 /***/ })

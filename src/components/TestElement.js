@@ -1,16 +1,18 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
 import { formatStyleProps, mergeDeep } from '../mixins/helpers.js';
 import AttributeMarshallingMixin from '../mixins/AttributeMarshallingMixin.js';
+import DefaultSlotContentMixin from '../mixins/DefaultSlotContentMixin.js';
 import LitHtmlShadowMixin from '../mixins/LitHtmlShadowMixin.js';
 import ReactiveMixin from '../mixins/ReactiveMixin.js';
 
 
 const Base =
   AttributeMarshallingMixin(
+  DefaultSlotContentMixin(
   LitHtmlShadowMixin(
   ReactiveMixin(
     HTMLElement
-  )));
+  ))));
 
 
 /**
@@ -32,11 +34,11 @@ export default class TestElement extends Base {
   }
 
   get defaultState() {
-    return {
+    return Object.assign({}, super.defaultState, {
       punctuation: '.'
-    };
+    });
   }
-  
+
   // These are properties that will be applied to the element's host.
   // Defining them this way allows other mixins to easily contribute style,
   // ARIA, and other attributes.
@@ -45,9 +47,9 @@ export default class TestElement extends Base {
     return mergeDeep(super.hostProps && super.hostProps(), {
       style: {
         'cursor': 'pointer',
-        'font-style': punctuation.match(/!/) ? 'italic' : 'inherit',
+        'font-style': punctuation.match(/!/) ? 'italic' : null,
         '-webkit-user-select': 'none',
-        'user-select': 'none'
+        'user-select': 'none',
       }
     });
   }
@@ -62,19 +64,16 @@ export default class TestElement extends Base {
 
   // Define a template that will be used to populate the shadow subtree.
   // This is fairly conventional FRP stuff: map component state (`this.state`)
-  // to DOM. Here we do that via lit-html. The `LitHtmlShadowMixin` mixin
+  // to DOM. Here we do that via lit-html. The `LitHtmlMixin` mixin
   // actually does the work of rendering the template initially, and whenever
   // the state changes.
   get template() {
     const hostProps = this.hostProps();
     const rootStyle = formatStyleProps(hostProps.style);
+    const hasContent = this.state.content && this.state.content.length > 0;
+    const comma = hasContent ? ', ' : '';
     const template = html`
-      <style>
-        :host {
-          ${rootStyle}
-        }
-      </style>
-      Hello, <slot></slot>${this.punctuation}
+      Hello${comma}${this.renderContent()}${this.punctuation}
     `;
     return template;
   }
