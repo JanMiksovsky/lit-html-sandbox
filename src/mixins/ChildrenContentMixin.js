@@ -1,5 +1,5 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
-import { repeat } from '../../node_modules/lit-html/lib/repeat.js';
+// import { repeat } from '../../node_modules/lit-html/lib/repeat.js';
 import symbols from './symbols.js';
 
 
@@ -83,6 +83,7 @@ export default function ChildrenContentMixin(Base) {
 
     renderContent() {
       return this.state.content;
+      // return html`${this.state.content}`;
       // return html`${repeat(this.state.content, item => item)}`;
     }
 
