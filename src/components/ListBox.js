@@ -3,13 +3,13 @@ import { html } from '../../node_modules/lit-html/lit-html.js';
 import AttributeMarshallingMixin from '../mixins/AttributeMarshallingMixin.js';
 import ClickSelectionMixin from '../mixins/ClickSelectionMixin.js';
 import ContentItemsMixin from '../mixins/ContentItemsMixin.js';
-import DefaultSlotContentMixin from '../mixins/DefaultSlotContentMixin.js';
+import ContentCompatMixin from '../mixins/ContentCompatMixin.js';
 import DirectionSelectionMixin from '../mixins/DirectionSelectionMixin.js';
 import KeyboardDirectionMixin from '../mixins/KeyboardDirectionMixin.js';
 import KeyboardMixin from '../mixins/KeyboardMixin.js';
 import KeyboardPagedSelectionMixin from '../mixins/KeyboardPagedSelectionMixin.js';
 import KeyboardPrefixSelectionMixin from '../mixins/KeyboardPrefixSelectionMixin.js';
-import LitHtmlShadowMixin from '../mixins/LitHtmlShadowMixin.js';
+import LitHtmlCompatMixin from '../mixins/LitHtmlCompatMixin.js';
 import ReactiveMixin from '../mixins/ReactiveMixin.js';
 import SelectionAriaMixin from '../mixins/SelectionAriaMixin.js';
 import SelectionInViewMixin from '../mixins/SelectionInViewMixin.js';
@@ -20,13 +20,13 @@ const Base =
   AttributeMarshallingMixin(
   ClickSelectionMixin(
   ContentItemsMixin(
-  DefaultSlotContentMixin(
+  ContentCompatMixin(
   DirectionSelectionMixin(
   KeyboardDirectionMixin(
   KeyboardMixin(
   KeyboardPagedSelectionMixin(
   KeyboardPrefixSelectionMixin(
-  LitHtmlShadowMixin(
+  LitHtmlCompatMixin(
   ReactiveMixin(
   SelectionAriaMixin(
   SelectionInViewMixin(
@@ -41,6 +41,18 @@ export default class ListBox extends Base {
     return Object.assign({}, super.defaultState, {
       orientation: 'vertical'
     });
+  }
+
+  hostProps() {
+    const base = super.hostProps && super.hostProps();
+    const style = {
+      'border': '1px solid gray',
+      'box-sizing': 'border-box',
+      'cursor': 'default',
+      'display': 'flex',
+      '-webkit-tap-highlight-color': 'rgba(0, 0, 0, 0)'
+    };
+    return mergeDeep(base, { style });
   }
 
   itemProps(item, index) {
@@ -71,14 +83,6 @@ export default class ListBox extends Base {
   get template() {
     const template = html`
       <style>
-        :host {
-          border: 1px solid gray;
-          box-sizing: border-box;
-          cursor: default;
-          display: flex;
-          -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-        }
-
         #itemsContainer {
           flex: 1;
           -webkit-overflow-scrolling: touch; /* for momentum scrolling */
@@ -87,7 +91,7 @@ export default class ListBox extends Base {
         }
       </style>
       <div id="itemsContainer" role="none">
-        <slot></slot>
+        ${this.renderContent()}
       </div>
     `;
     return template;

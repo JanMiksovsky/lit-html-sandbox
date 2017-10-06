@@ -80,7 +80,7 @@ export default function SingleSelectionMixin(Base) {
 
 function selectIndex(component, index) {
 
-  const items = component.state.items;
+  const items = component.items;
   if (items == null) {
     // Nothing to select.
     return false;
@@ -107,7 +107,7 @@ function selectIndex(component, index) {
  */
 function trackSelectedItem(component) {
 
-  const items = component.state.items;
+  const items = component.items;
   const itemCount = items ? items.length : 0;
   const previousSelectedIndex = component.state.selectedIndex;
 

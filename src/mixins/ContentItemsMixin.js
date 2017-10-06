@@ -1,4 +1,4 @@
-import * as content from './content.js';
+import { substantiveElements } from './content.js';
 // import Symbol from './Symbol.js';
 import symbols from './symbols.js';
 import { updateProps } from '../mixins/helpers.js';
@@ -6,7 +6,7 @@ import { updateProps } from '../mixins/helpers.js';
 
 // Symbols for private data members on an element.
 const itemsKey = Symbol('items');
-const itemInitializedKey = Symbol('itemInitialized');
+const previousContentKey = Symbol('previousContent');
 
 
 /**
@@ -45,22 +45,7 @@ const itemInitializedKey = Symbol('itemInitialized');
  * @module ContentItemsMixin
  */
 export default function ContentItemsMixin(Base) {
-
-  // The class prototype added by the mixin.
-  class ContentItems extends Base {
-
-    [symbols.contentChanged]() {
-      if (super[symbols.contentChanged]) { super[symbols.contentChanged](); }
-      this.setState({
-        items: content.substantiveElements(this[symbols.content])
-      });
-    }
-
-    get defaultState() {
-      return Object.assign({}, super.defaultState, {
-        items: []
-      });
-    }
+  return class ContentItems extends Base {
 
     /**
      * Return the index of the list child that is, or contains, the indicated target
@@ -78,25 +63,28 @@ export default function ContentItemsMixin(Base) {
     }
 
     get items() {
-      return super.items || this.state.items;
+      const base = super.items;
+      if (base) {
+        // Prefer base result if it's defined.
+        return base;
+      }
+      const content = this.state.content;
+      if (this[previousContentKey] !== content) {
+        // Memoize
+        this[itemsKey] = content && substantiveElements(content);
+        this[previousContentKey] = content;
+      }
+      return this[itemsKey];
     }
 
     render() {
       if (super.render) { super.render(); }
       if (this.itemProps) {
-        this.state.items.forEach((item, index) => {
+        const items = this.items || [];
+        items.forEach((item, index) => {
           updateProps(item, this.itemProps(item, index));
         });
       }
     }
-
-    /**
-     * Fires when the items in the list change.
-     *
-     * @memberof ContentItems
-     * @event items-changed
-     */
   }
-
-  return ContentItems;
 }
