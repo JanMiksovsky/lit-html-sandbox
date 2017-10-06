@@ -18,7 +18,7 @@ export default function ChildrenContentMixin(Base) {
       if (this[symbols.rendering]) {
         super.appendChild(child);
       } else {
-        console.log(`appendChild ${child}`);
+        // console.log(`appendChild ${child}`);
         const content = [...this.state.content, child];
         this.setState({ content });
       }
@@ -26,20 +26,20 @@ export default function ChildrenContentMixin(Base) {
 
     connectedCallback() {
       if (super.connectedCallback) { super.connectedCallback(); }
-      console.log(`connectedCallback: ${this.childNodes.length}`);
+      // console.log(`connectedCallback: ${this.childNodes.length}`);
       if (this.state.content === null) {
         // First call to connectedCallback.
         if (this.childNodes.length === 0) {
           // The document may still be parsing.
 
           this[initialContentObserverKey] = new MutationObserver(() => {
-            console.log(`MutationObserver: ${this.childNodes.length}`);
+            // console.log(`MutationObserver: ${this.childNodes.length}`);
             extractInitialContent(this);
           });
           this[initialContentObserverKey].observe(this, { childList: true });
 
           this[initialContentTimeoutKey] = setTimeout(() => {
-            console.log(`timeout: ${this.childNodes.length}`);
+            // console.log(`timeout: ${this.childNodes.length}`);
             extractInitialContent(this);
           });
         } else {
@@ -76,7 +76,7 @@ export default function ChildrenContentMixin(Base) {
         const template = document.createElement('template');
         template.innerHTML = html;
         const content = [...template.content.childNodes];
-        console.log(`set innerHTML = ${content}`);
+        // console.log(`set innerHTML = ${content}`);
         this.setState({ content });
       }
     }
@@ -101,7 +101,7 @@ export default function ChildrenContentMixin(Base) {
         super.textContent = textContent;
       } else {
         const content = textContent.toString();
-        console.log(`set textContent = ${content}`);
+        // console.log(`set textContent = ${content}`);
         this.setState({ content });
       }
     }
@@ -112,7 +112,7 @@ export default function ChildrenContentMixin(Base) {
 
 function extractInitialContent(component) {
 
-  console.log(`extractInitialContent`);
+  // console.log(`extractInitialContent`);
 
   // Stop waiting for any pending notifications.
   if (component[initialContentObserverKey]) {

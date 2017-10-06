@@ -24,10 +24,10 @@ export default function LitHtmlMixin(Base) {
       
       if (this.state.content === null) {
         // State of content is not yet unknown; wait to render.
-        console.log(`waiting to render`);
+        // console.log(`waiting to render`);
         return;
       }
-      console.log(`rendering`);
+      // console.log(`rendering`);
       this[renderedKey] = true;
       
       // Invoke lit-html to render the shadow subtree.

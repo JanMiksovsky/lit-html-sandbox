@@ -29,7 +29,7 @@ export default function LitHtmlShadowMixin(Base) {
     render() {
       if (super.render) { super.render(); }
 
-      console.log(`rendering`);
+      // console.log(`rendering`);
       this[renderedKey] = true;
 
       let newShadow = false;

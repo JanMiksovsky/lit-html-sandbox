@@ -57,7 +57,7 @@ export default function DefaultSlotContentMixin(Base) {
 
     connectedCallback() {
       if (super.connectedCallback) { super.connectedCallback(); }
-      console.log(`connectedCallback`);
+      // console.log(`connectedCallback`);
       setTimeout(() => {
         // Some browsers fire slotchange when the slot's initial nodes are
         // assigned; others don't. If we haven't already received a slotchange
@@ -65,7 +65,7 @@ export default function DefaultSlotContentMixin(Base) {
         // up based on its initial content.
         if (!this[slotchangeFiredKey]) {
           // Invoke contentChanged as would have happened on slotchange.
-          console.log(`timeout`);
+          // console.log(`timeout`);
           this[slotchangeFiredKey] = true;
           assignedNodesChanged(this);
         }
@@ -88,7 +88,7 @@ export default function DefaultSlotContentMixin(Base) {
       const slot = defaultSlot(this);
       if (slot) {
         slot.addEventListener('slotchange', event => {
-          console.log(`slotchange`);
+          // console.log(`slotchange`);
           this[slotchangeFiredKey] = true;
           assignedNodesChanged(this);
         });
