@@ -27,12 +27,14 @@ export default function ClickSelectionMixin(Base) {
       // Instead of using the event target, we get the first node in the
       // event's composed path.
       // @ts-ignore
-      const target = event.composedPath()[0];
+      const target = event.composedPath ?
+        event.composedPath()[0] :
+        event.target;
 
       // Find which item was clicked on and, if found, select it. For elements
       // which don't require a selection, a background click will determine
       // the item was null, in which we case we'll remove the selection.
-      const targetIndex = this.indexOfTarget(event.target);
+      const targetIndex = this.indexOfTarget(target);
       const selectionRequired = this.state.selectionRequired;
       if (targetIndex >= 0 || !selectionRequired) {
         this.updateSelectedIndex(targetIndex);
