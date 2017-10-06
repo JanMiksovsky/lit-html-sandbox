@@ -14,6 +14,7 @@ import ReactiveMixin from '../mixins/ReactiveMixin.js';
 import SelectionAriaMixin from '../mixins/SelectionAriaMixin.js';
 import SelectionInViewMixin from '../mixins/SelectionInViewMixin.js';
 import SingleSelectionMixin from '../mixins/SingleSelectionMixin.js';
+import symbols from '../mixins/symbols.js';
 
 
 const Base =
@@ -99,6 +100,12 @@ export default class ListBox extends Base {
       </div>
     `;
     return template;
+  }
+
+  get [symbols.scrollTarget]() {
+    const root = this.shadowRoot || this;
+    const itemsContainer = root.querySelector('#itemsContainer');
+    return itemsContainer;
   }
 
 }
