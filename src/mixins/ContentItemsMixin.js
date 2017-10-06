@@ -71,7 +71,9 @@ export default function ContentItemsMixin(Base) {
       const content = this.state.content;
       if (this[previousContentKey] !== content) {
         // Memoize
-        this[itemsKey] = content && substantiveElements(content);
+        this[itemsKey] = content ?
+          substantiveElements(content) :
+          [];
         this[previousContentKey] = content;
       }
       return this[itemsKey];
