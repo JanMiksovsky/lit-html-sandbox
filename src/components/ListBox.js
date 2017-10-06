@@ -1,4 +1,4 @@
-import { formatStyleProps, mergeDeep } from '../mixins/helpers.js';
+import { existingStyleProps, formatStyleProps, mergeDeep } from '../mixins/helpers.js';
 import { html } from '../../node_modules/lit-html/lit-html.js';
 import AttributeMarshallingMixin from '../mixins/AttributeMarshallingMixin.js';
 import ClickSelectionMixin from '../mixins/ClickSelectionMixin.js';
@@ -45,13 +45,17 @@ export default class ListBox extends Base {
 
   hostProps() {
     const base = super.hostProps && super.hostProps();
-    const style = {
-      'border': '1px solid gray',
-      'box-sizing': 'border-box',
-      'cursor': 'default',
-      'display': 'flex',
-      '-webkit-tap-highlight-color': 'rgba(0, 0, 0, 0)'
-    };
+    const style = Object.assign(
+      {},
+      existingStyleProps(this),
+      {
+        'border': '1px solid gray',
+        'box-sizing': 'border-box',
+        'cursor': 'default',
+        'display': 'flex',
+        '-webkit-tap-highlight-color': 'rgba(0, 0, 0, 0)'
+      }
+    );
     return mergeDeep(base, { style });
   }
 

@@ -1,3 +1,12 @@
+export function existingStyleProps(element) {
+  const styleProps = {};
+  [...element.style].forEach(key => {
+    styleProps[key] = element.style[key];
+  });
+  return styleProps;
+}
+
+
 export function formatStyleProps(styleProps) {
   if (!styleProps) {
     return '';
