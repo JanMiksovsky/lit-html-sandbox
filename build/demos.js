@@ -74,9 +74,13 @@ var _TestElement = __webpack_require__(7);
 
 var _TestElement2 = _interopRequireDefault(_TestElement);
 
-var _TestElement3 = __webpack_require__(9);
+var _TestElement3 = __webpack_require__(12);
 
 var _TestElement4 = _interopRequireDefault(_TestElement3);
+
+var _TestElement5 = __webpack_require__(9);
+
+var _TestElement6 = _interopRequireDefault(_TestElement5);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1067,7 +1071,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var renderedKey = Symbol('initialized');
+var renderedKey = Symbol('rendered');
 
 /**
  * Mixin for rendering a component's light DOM contents using lit-html.
@@ -1238,13 +1242,13 @@ var _AttributeMarshallingMixin = __webpack_require__(4);
 
 var _AttributeMarshallingMixin2 = _interopRequireDefault(_AttributeMarshallingMixin);
 
-var _DefaultSlotContentMixin = __webpack_require__(8);
+var _ContentCompatMixin = __webpack_require__(13);
 
-var _DefaultSlotContentMixin2 = _interopRequireDefault(_DefaultSlotContentMixin);
+var _ContentCompatMixin2 = _interopRequireDefault(_ContentCompatMixin);
 
-var _LitHtmlShadowMixin = __webpack_require__(11);
+var _LitHtmlCompatMixin = __webpack_require__(14);
 
-var _LitHtmlShadowMixin2 = _interopRequireDefault(_LitHtmlShadowMixin);
+var _LitHtmlCompatMixin2 = _interopRequireDefault(_LitHtmlCompatMixin);
 
 var _ReactiveMixin = __webpack_require__(6);
 
@@ -1260,7 +1264,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Base = (0, _AttributeMarshallingMixin2.default)((0, _DefaultSlotContentMixin2.default)((0, _LitHtmlShadowMixin2.default)((0, _ReactiveMixin2.default)(HTMLElement))));
+var Base = (0, _AttributeMarshallingMixin2.default)((0, _ContentCompatMixin2.default)((0, _LitHtmlCompatMixin2.default)((0, _ReactiveMixin2.default)(HTMLElement))));
 
 /**
  * A simple web component created with a functional reactive programming (FRP)
@@ -1452,21 +1456,24 @@ function DefaultSlotContentMixin(Base) {
     _createClass(DefaultSlotContent, [{
       key: 'connectedCallback',
       value: function connectedCallback() {
+        var _this2 = this;
+
         if (_get(DefaultSlotContent.prototype.__proto__ || Object.getPrototypeOf(DefaultSlotContent.prototype), 'connectedCallback', this)) {
           _get(DefaultSlotContent.prototype.__proto__ || Object.getPrototypeOf(DefaultSlotContent.prototype), 'connectedCallback', this).call(this);
         }
-        // setTimeout(() => {
-        // Some browsers fire slotchange when the slot's initial nodes are
-        // assigned; others don't. If we haven't already received a slotchange
-        // event by now, then act as if we did so the component can set things
-        // up based on its initial content.
-        if (!this[slotchangeFiredKey]) {
-          // Invoke contentChanged as would have happened on slotchange.
-          console.log('connectedCallback');
-          this[slotchangeFiredKey] = true;
-          assignedNodesChanged(this);
-        }
-        // });
+        console.log('connectedCallback');
+        setTimeout(function () {
+          // Some browsers fire slotchange when the slot's initial nodes are
+          // assigned; others don't. If we haven't already received a slotchange
+          // event by now, then act as if we did so the component can set things
+          // up based on its initial content.
+          if (!_this2[slotchangeFiredKey]) {
+            // Invoke contentChanged as would have happened on slotchange.
+            console.log('timeout');
+            _this2[slotchangeFiredKey] = true;
+            assignedNodesChanged(_this2);
+          }
+        });
       }
     }, {
       key: 'renderContent',
@@ -1476,7 +1483,7 @@ function DefaultSlotContentMixin(Base) {
     }, {
       key: _symbols2.default.shadowCreated,
       value: function value() {
-        var _this2 = this;
+        var _this3 = this;
 
         if (_get(DefaultSlotContent.prototype.__proto__ || Object.getPrototypeOf(DefaultSlotContent.prototype), _symbols2.default.shadowCreated, this)) {
           _get(DefaultSlotContent.prototype.__proto__ || Object.getPrototypeOf(DefaultSlotContent.prototype), _symbols2.default.shadowCreated, this).call(this);
@@ -1486,8 +1493,8 @@ function DefaultSlotContentMixin(Base) {
         if (slot && this[_symbols2.default.contentChanged]) {
           slot.addEventListener('slotchange', function (event) {
             console.log('slotchange');
-            _this2[slotchangeFiredKey] = true;
-            assignedNodesChanged(_this2);
+            _this3[slotchangeFiredKey] = true;
+            assignedNodesChanged(_this3);
           });
         }
       }
@@ -1892,6 +1899,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var renderedKey = Symbol('rendered');
+
 /**
  * Mixin for rendering a component's Shadow DOM using lit-html.
  */
@@ -1906,7 +1915,7 @@ function LitHtmlShadowMixin(Base) {
     }
 
     _createClass(LitHtmlShadow, [{
-      key: 'render',
+      key: 'connectedCallback',
 
 
       // connectedCallback() {
@@ -1916,10 +1925,24 @@ function LitHtmlShadowMixin(Base) {
       //   }
       // }
 
+      value: function connectedCallback() {
+        if (_get(LitHtmlShadow.prototype.__proto__ || Object.getPrototypeOf(LitHtmlShadow.prototype), 'connectedCallback', this)) {
+          _get(LitHtmlShadow.prototype.__proto__ || Object.getPrototypeOf(LitHtmlShadow.prototype), 'connectedCallback', this).call(this);
+        }
+        // If we haven't rendered yet, do so now.
+        if (!this[renderedKey]) {
+          this.render();
+        }
+      }
+    }, {
+      key: 'render',
       value: function render() {
         if (_get(LitHtmlShadow.prototype.__proto__ || Object.getPrototypeOf(LitHtmlShadow.prototype), 'render', this)) {
           _get(LitHtmlShadow.prototype.__proto__ || Object.getPrototypeOf(LitHtmlShadow.prototype), 'render', this).call(this);
         }
+
+        console.log('rendering');
+        this[renderedKey] = true;
 
         var newShadow = false;
         if (!this.shadowRoot) {
@@ -1951,6 +1974,203 @@ function LitHtmlShadowMixin(Base) {
 
     return LitHtmlShadow;
   }(Base);
+}
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _templateObject = _taggedTemplateLiteral(['\n      Hello', '', '', '\n    '], ['\n      Hello', '', '', '\n    ']);
+
+var _litHtml = __webpack_require__(1);
+
+var _helpers = __webpack_require__(2);
+
+var _AttributeMarshallingMixin = __webpack_require__(4);
+
+var _AttributeMarshallingMixin2 = _interopRequireDefault(_AttributeMarshallingMixin);
+
+var _DefaultSlotContentMixin = __webpack_require__(8);
+
+var _DefaultSlotContentMixin2 = _interopRequireDefault(_DefaultSlotContentMixin);
+
+var _LitHtmlShadowMixin = __webpack_require__(11);
+
+var _LitHtmlShadowMixin2 = _interopRequireDefault(_LitHtmlShadowMixin);
+
+var _ReactiveMixin = __webpack_require__(6);
+
+var _ReactiveMixin2 = _interopRequireDefault(_ReactiveMixin);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Base = (0, _AttributeMarshallingMixin2.default)((0, _DefaultSlotContentMixin2.default)((0, _LitHtmlShadowMixin2.default)((0, _ReactiveMixin2.default)(HTMLElement))));
+
+/**
+ * A simple web component created with a functional reactive programming (FRP)
+ * style. In this approach, we track component state in a single `state` member,
+ * then render that state to DOM. For that task, the component uses lit-html,
+ * although other similar libraries could be used instead.
+ *
+ * The component itself is a trivial "Hello, world" element.
+ */
+
+var TestElement = function (_Base) {
+  _inherits(TestElement, _Base);
+
+  function TestElement() {
+    _classCallCheck(this, TestElement);
+
+    // Sample event handler just to show we can respond to events.
+    var _this = _possibleConstructorReturn(this, (TestElement.__proto__ || Object.getPrototypeOf(TestElement)).call(this));
+
+    _this.addEventListener('click', function (event) {
+      _this.togglePunctuation();
+    });
+    return _this;
+  }
+
+  _createClass(TestElement, [{
+    key: 'hostProps',
+
+
+    // These are properties that will be applied to the element's host.
+    // Defining them this way allows other mixins to easily contribute style,
+    // ARIA, and other attributes.
+    value: function hostProps() {
+      var punctuation = this.state.punctuation || '';
+      return (0, _helpers.mergeDeep)(_get(TestElement.prototype.__proto__ || Object.getPrototypeOf(TestElement.prototype), 'hostProps', this) && _get(TestElement.prototype.__proto__ || Object.getPrototypeOf(TestElement.prototype), 'hostProps', this).call(this), {
+        style: {
+          'cursor': 'pointer',
+          'font-style': punctuation.match(/!/) ? 'italic' : null,
+          '-webkit-user-select': 'none',
+          'user-select': 'none'
+        }
+      });
+    }
+
+    // A sample property that updates component state.
+
+  }, {
+    key: 'togglePunctuation',
+    value: function togglePunctuation() {
+      this.punctuation = this.punctuation === '.' ? '!' : '.';
+    }
+  }, {
+    key: 'defaultState',
+    get: function get() {
+      return Object.assign({}, _get(TestElement.prototype.__proto__ || Object.getPrototypeOf(TestElement.prototype), 'defaultState', this), {
+        punctuation: '.'
+      });
+    }
+  }, {
+    key: 'punctuation',
+    get: function get() {
+      return this.state.punctuation;
+    },
+    set: function set(punctuation) {
+      this.setState({ punctuation: punctuation });
+    }
+
+    // Define a template that will be used to populate the shadow subtree.
+    // This is fairly conventional FRP stuff: map component state (`this.state`)
+    // to DOM. Here we do that via lit-html. The `LitHtmlMixin` mixin
+    // actually does the work of rendering the template initially, and whenever
+    // the state changes.
+
+  }, {
+    key: 'template',
+    get: function get() {
+      var hostProps = this.hostProps();
+      var rootStyle = (0, _helpers.formatStyleProps)(hostProps.style);
+      var hasContent = this.state.content && this.state.content.length > 0;
+      var comma = hasContent ? ', ' : '';
+      var template = (0, _litHtml.html)(_templateObject, comma, this.renderContent(), this.punctuation);
+      return template;
+    }
+  }]);
+
+  return TestElement;
+}(Base);
+
+exports.default = TestElement;
+
+
+customElements.define('test-element1', TestElement);
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = ContentCompatMixin;
+
+var _ChildrenContentMixin = __webpack_require__(10);
+
+var _ChildrenContentMixin2 = _interopRequireDefault(_ChildrenContentMixin);
+
+var _DefaultSlotContentMixin = __webpack_require__(8);
+
+var _DefaultSlotContentMixin2 = _interopRequireDefault(_DefaultSlotContentMixin);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function ContentCompatMixin(Base) {
+  var nativeShadow = 'shadowRoot' in Element.prototype;
+  var ContentMixin = nativeShadow ? _DefaultSlotContentMixin2.default : _ChildrenContentMixin2.default;
+  return ContentMixin(Base);
+}
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = LitHtmlCompatMixin;
+
+var _LitHtmlMixin = __webpack_require__(5);
+
+var _LitHtmlMixin2 = _interopRequireDefault(_LitHtmlMixin);
+
+var _LitHtmlShadowMixin = __webpack_require__(11);
+
+var _LitHtmlShadowMixin2 = _interopRequireDefault(_LitHtmlShadowMixin);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function LitHtmlCompatMixin(Base) {
+  var nativeShadow = 'shadowRoot' in Element.prototype;
+  var Mixin = nativeShadow ? _LitHtmlShadowMixin2.default : _LitHtmlMixin2.default;
+  return Mixin(Base);
 }
 
 /***/ })

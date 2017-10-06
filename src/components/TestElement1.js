@@ -1,15 +1,15 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
 import { formatStyleProps, mergeDeep } from '../mixins/helpers.js';
 import AttributeMarshallingMixin from '../mixins/AttributeMarshallingMixin.js';
-import ContentCompatMixin from '../mixins/ContentCompatMixin.js';
-import LitHtmlCompatMixin from '../mixins/LitHtmlCompatMixin.js';
+import DefaultSlotContentMixin from '../mixins/DefaultSlotContentMixin.js';
+import LitHtmlShadowMixin from '../mixins/LitHtmlShadowMixin.js';
 import ReactiveMixin from '../mixins/ReactiveMixin.js';
 
 
 const Base =
   AttributeMarshallingMixin(
-  ContentCompatMixin(
-  LitHtmlCompatMixin(
+  DefaultSlotContentMixin(
+  LitHtmlShadowMixin(
   ReactiveMixin(
     HTMLElement
   ))));
@@ -86,4 +86,4 @@ export default class TestElement extends Base {
 }
 
 
-customElements.define('test-element', TestElement);
+customElements.define('test-element1', TestElement);

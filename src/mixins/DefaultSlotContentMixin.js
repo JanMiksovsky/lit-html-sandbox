@@ -57,18 +57,19 @@ export default function DefaultSlotContentMixin(Base) {
 
     connectedCallback() {
       if (super.connectedCallback) { super.connectedCallback(); }
-      // setTimeout(() => {
+      console.log(`connectedCallback`);
+      setTimeout(() => {
         // Some browsers fire slotchange when the slot's initial nodes are
         // assigned; others don't. If we haven't already received a slotchange
         // event by now, then act as if we did so the component can set things
         // up based on its initial content.
         if (!this[slotchangeFiredKey]) {
           // Invoke contentChanged as would have happened on slotchange.
-          console.log(`connectedCallback`);
+          console.log(`timeout`);
           this[slotchangeFiredKey] = true;
           assignedNodesChanged(this);
         }
-      // });
+      });
     }
 
     get defaultState() {

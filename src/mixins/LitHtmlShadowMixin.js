@@ -2,6 +2,9 @@ import { render } from '../../node_modules/lit-html/lit-html.js';
 import symbols from './symbols.js';
 
 
+const renderedKey = Symbol('rendered');
+
+
 /**
  * Mixin for rendering a component's Shadow DOM using lit-html.
  */
@@ -15,8 +18,19 @@ export default function LitHtmlShadowMixin(Base) {
     //   }
     // }
 
+    connectedCallback() {
+      if (super.connectedCallback) { super.connectedCallback(); }
+      // If we haven't rendered yet, do so now.
+      if (!this[renderedKey]) {
+        this.render();
+      }
+    }
+
     render() {
       if (super.render) { super.render(); }
+
+      console.log(`rendering`);
+      this[renderedKey] = true;
 
       let newShadow = false;
       if (!this.shadowRoot) {
