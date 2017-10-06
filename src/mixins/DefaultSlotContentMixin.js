@@ -86,7 +86,7 @@ export default function DefaultSlotContentMixin(Base) {
       if (super[symbols.shadowCreated]) { super[symbols.shadowCreated](); }
       // Listen to changes on the default slot.
       const slot = defaultSlot(this);
-      if (slot && this[symbols.contentChanged]) {
+      if (slot) {
         slot.addEventListener('slotchange', event => {
           console.log(`slotchange`);
           this[slotchangeFiredKey] = true;
