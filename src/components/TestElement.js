@@ -49,6 +49,7 @@ export default class TestElement extends Base {
       style: {
         'cursor': 'pointer',
         'font-style': punctuation.match(/!/) ? 'italic' : 'inherit',
+        '-webkit-tap-highlight-color': 'transparent',
         '-ms-user-select': 'none',
         '-webkit-user-select': 'none',
         'user-select': 'none',
