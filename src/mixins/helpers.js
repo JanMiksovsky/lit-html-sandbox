@@ -1,3 +1,18 @@
+const attributeWhiteList = [
+  'class',
+  'role',
+];
+
+// See if `style` can be set as a property, or requires an attribute.
+const test = document.createElement('div');
+try {
+  test.style = 'color: red';
+} catch (e) {
+  // IE 11
+  attributeWhiteList.push('style');
+}
+
+
 export function existingStyleProps(element) {
   const styleProps = {};
   [...element.style].forEach(key => {
@@ -12,16 +27,11 @@ export function formatStyleProps(styleProps) {
     return '';
   }
   const attributes = Object.keys(styleProps).map(key => `${key}: ${styleProps[key]}`);
-  return attributes.join(';');
+  return attributes.join('; ');
 }
 
 
 export function isAttribute(key) {
-  const attributeWhiteList = [
-    'class',
-    'role',
-    'style' // for IE 11
-  ];
   return key.match(/-/) || attributeWhiteList.indexOf(key) >= 0;
 }
 
@@ -48,6 +58,8 @@ export function updateProps(element, props) {
     const value = key === 'style' ?
       formatStyleProps(props[key]) :
       props[key];
+    // TODO: See whether this dirty check works on `style` in IE, or whether it
+    // always thinks the value has changed.
     if (isAttribute(key) && element.getAttribute(key) !== value) {
       // Update attribute
       if (value) {
