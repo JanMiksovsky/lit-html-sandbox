@@ -12,16 +12,35 @@ const initialContentTimeoutKey = Symbol('initialContentTimeout');
 /**
  * Define a component's content as its light DOM children.
  */
+// TODO: innerText, outerHTML, querySelector, querySelectorAll
 export default function ChildrenContentMixin(Base) {
   return class ChildrenContent extends Base {
 
     appendChild(child) {
       if (this[symbols.rendering]) {
-        super.appendChild(child);
+        return super.appendChild(child);
       } else {
         // console.log(`appendChild ${child}`);
         const content = [...this.state.content, child];
         this.setState({ content });
+        return child;
+      }
+    }
+
+    get childNodes() {
+      if (this[symbols.rendering]) {
+        return super.childNodes;
+      } else {
+        return this.state.content.slice();
+      }
+    }
+
+    get children() {
+      if (this[symbols.rendering]) {
+        return super.children;
+      } else {
+        const elements = this.state.content.filter(item => item instanceof Element);
+        return elements;
       }
     }
 
@@ -30,7 +49,7 @@ export default function ChildrenContentMixin(Base) {
       // console.log(`connectedCallback: ${this.childNodes.length}`);
       if (this.state.content === null) {
         // First call to connectedCallback.
-        if (this.childNodes.length === 0) {
+        if (super.childNodes.length === 0) {
           // The document may still be parsing.
 
           this[initialContentObserverKey] = new MutationObserver(() => {
@@ -50,10 +69,35 @@ export default function ChildrenContentMixin(Base) {
       }
     }
 
+    contains(child) {
+      if (this[symbols.rendering]) {
+        return super.contains(child);
+      } else {
+        return this.state.content && this.state.content.indexOf(child) >= 0;
+      }
+    }
+
     get defaultState() {
       return Object.assign({}, super.defaultState, {
         content: null
       });
+    }
+
+    get firstChild() {
+      if (this[symbols.rendering]) {
+        return super.firstChild;
+      } else {
+        const child = this.state.content && this.state.content[0];
+        return child;
+      }
+    }
+
+    hasChildNodes() {
+      if (this[symbols.rendering]) {
+        return super.hasChildNodes();
+      } else {
+        return this.state.content && this.state.content.length > 0;
+      }
     }
 
     get innerHTML() {
@@ -79,6 +123,65 @@ export default function ChildrenContentMixin(Base) {
         const content = [...template.content.childNodes];
         // console.log(`set innerHTML = ${content}`);
         this.setState({ content });
+      }
+    }
+
+    insertBefore(newNode, referenceNode) {
+      if (this[symbols.rendering]) {
+        return super.insertBefore(newNode, referenceNode);
+      } else {
+        const content = this.state.content;
+        const index = referenceNode ?
+          content.indexOf(referenceNode) :
+          content.length;
+        if (index >= 0) {
+          const content = content.slice();
+          content.splice(index, 0, newNode);
+          this.setState({ content });
+        } else {
+          throw 'Exception: The node before which the new node is to be inserted is not a child of this node.';
+        }
+        return newNode;
+      }
+    }
+
+    get lastChild() {
+      if (this[symbols.rendering]) {
+        return super.lastChild;
+      } else {
+        const content = this.state.content;
+        const child = content && content.length > 0 ?
+          content[content.length - 1] :
+          null;
+        return child;
+      }
+    }
+
+    removeChild(child) {
+      if (this[symbols.rendering]) {
+        return super.removeChild(child);
+      } else {
+        const index = this.state.content.indexOf(child);
+        if (index >= 0) {
+          const content = this.state.content.slice();
+          content.splice(index, 1);
+          this.setState({ content });
+        }
+        return child;
+      }
+    }
+
+    replaceChild(newChild, oldChild) {
+      if (this[symbols.rendering]) {
+        return super.replaceChild(newChild, oldChild);
+      } else {
+        const index = this.state.content.indexOf(oldChild);
+        if (index >= 0) {
+          const content = this.state.content.slice();
+          content[index] = newChild;
+          this.setState({ content });
+        }
+        return oldChild;
       }
     }
 
@@ -129,10 +232,13 @@ function extractInitialContent(component) {
 
   // Extract any initial light DOM children as content.
   const content = [];
+  const rendering = component[symbols.rendering];
+  component[symbols.rendering] = true;
   while (component.childNodes.length > 0) {
     content.push(component.childNodes[0]);
     component.removeChild(component.childNodes[0]);
   }
+  component[symbols.rendering] = rendering;
 
   // Set the content as state, triggering a render. That will typically render
   // the content into some new position in the light DOM.
