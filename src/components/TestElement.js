@@ -71,8 +71,7 @@ export default class TestElement extends Base {
   // actually does the work of rendering the template initially, and whenever
   // the state changes.
   get template() {
-    const hasContent = this.state.content && this.state.content.length > 0;
-    const comma = hasContent ? ', ' : '';
+    const comma = hasTextContent(this) ? ', ' : '';
     const template = html`
       Hello${comma}${this.renderContent()}${this.punctuation}
     `;
@@ -84,6 +83,21 @@ export default class TestElement extends Base {
       '!' :
       '.';
   }
+}
+
+
+function hasTextContent(component) {
+  const content = component.state.content;
+  if (!content) {
+    return false;
+  }
+  for (let i = 0; i < content.length; i++) {
+    const node = content[i];
+    if (node.textContent.length > 0) {
+      return true;
+    }
+  }
+  return false;
 }
 
 

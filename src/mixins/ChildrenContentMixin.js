@@ -205,8 +205,9 @@ export default function ChildrenContentMixin(Base) {
       if (this[symbols.rendering]) {
         super.textContent = textContent;
       } else {
-        const text = document.createTextNode(textContent.toString());
-        const content = [text];
+        const content = textContent == null ?
+          [] :
+          [document.createTextNode(textContent)];
         // console.log(`set textContent = ${content}`);
         this.setState({ content });
       }
