@@ -13,16 +13,7 @@ try {
 }
 
 
-export function existingStyleProps(element) {
-  const styleProps = {};
-  [...element.style].forEach(key => {
-    styleProps[key] = element.style[key];
-  });
-  return styleProps;
-}
-
-
-export function formatStyleProps(styleProps) {
+export function formatStyle(styleProps) {
   if (!styleProps) {
     return '';
   }
@@ -53,10 +44,19 @@ export function mergeDeep(...sources) {
 }
 
 
+export function parseStyle(element) {
+  const styleProps = {};
+  [...element.style].forEach(key => {
+    styleProps[key] = element.style[key];
+  });
+  return styleProps;
+}
+
+
 export function updateProps(element, props) {
   Object.keys(props).forEach(key => {
     const value = key === 'style' ?
-      formatStyleProps(props[key]) :
+      formatStyle(props[key]) :
       props[key];
     // TODO: See whether this dirty check works on `style` in IE, or whether it
     // always thinks the value has changed.

@@ -1,4 +1,4 @@
-import { existingStyleProps, formatStyleProps, mergeDeep } from '../mixins/helpers.js';
+import { formatStyle, mergeDeep, parseStyle } from '../mixins/helpers.js';
 import { html } from '../../node_modules/lit-html/lit-html.js';
 import AttributeMarshallingMixin from '../mixins/AttributeMarshallingMixin.js';
 import ClickSelectionMixin from '../mixins/ClickSelectionMixin.js';
@@ -47,7 +47,7 @@ export default class ListBox extends Base {
   hostProps() {
     const base = super.hostProps && super.hostProps();
     const style = Object.assign(
-      existingStyleProps(this),
+      parseStyle(this),
       {
         'border': '1px solid gray',
         'box-sizing': 'border-box',
@@ -63,7 +63,10 @@ export default class ListBox extends Base {
     const base = super.itemProps ? super.itemProps(item, index) : {};
     const selected = index === this.state.selectedIndex;
     const style = Object.assign(
+      parseStyle(item),
       {
+        'background': 'inherit',
+        'color': 'inherit',
         'padding': '0.25em',
       },
       selected && {
@@ -89,7 +92,7 @@ export default class ListBox extends Base {
       'overflow-y': 'scroll'
     };
     const template = html`
-      <div id="itemsContainer" role="none" style=${formatStyleProps(containerStyle)}>
+      <div id="itemsContainer" role="none" style=${formatStyle(containerStyle)}>
         ${this.renderContent()}
       </div>
     `;
