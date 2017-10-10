@@ -47,7 +47,6 @@ export default class ListBox extends Base {
   hostProps() {
     const base = super.hostProps && super.hostProps();
     const style = Object.assign(
-      {},
       existingStyleProps(this),
       {
         'border': '1px solid gray',
@@ -62,18 +61,15 @@ export default class ListBox extends Base {
 
   itemProps(item, index) {
     const base = super.itemProps ? super.itemProps(item, index) : {};
-    const itemStyle = {
-      'padding': '0.25em',
-    };
-    const selectedStyle = {
-      'background': 'highlight',
-      'color': 'highlighttext'
-    };
     const selected = index === this.state.selectedIndex;
     const style = Object.assign(
-      {},
-      itemStyle,
-      selected && selectedStyle
+      {
+        'padding': '0.25em',
+      },
+      selected && {
+        'background': 'highlight',
+        'color': 'highlighttext'
+      }
     );
     let className;
     if (selected) {
