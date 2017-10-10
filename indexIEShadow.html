@@ -11,8 +11,8 @@
   <script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-lite.js"></script>
   <!-- <script src="node_modules/@webcomponents/custom-elements/custom-elements.min.js"></script> -->
   <!-- <script src="node_modules/@webcomponents/custom-elements/src/native-shim.js"></script> -->
-  <!-- <script src="node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script> -->
-  <!-- <script type="module" src="./src/components/TestElement1.js"></script> -->
+  <script src="node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+  <!-- <script type="module" src="./src/components/TestElement2.js"></script> -->
   <script src="./build/demos.js"></script>
 
   <style>
@@ -29,9 +29,9 @@
     The custom elements below are web components that use a functional reactive
     model to render their shadow elements. In this case, they use lit-html.
   </p>
-  <test-element1>there</test-element1>
-  <test-element1 punctuation="?">anybody</test-element1>
-  <test-element1 punctuation="!"><b>world</b></test-element1>
+  <test-element-ie-shadow>there</test-element-ie-shadow>
+  <!-- <test-element-ie-shadow punctuation="?">anybody</test-element-ie-shadow> -->
+  <!-- <test-element-ie-shadow punctuation="!"><b>world</b></test-element-ie-shadow> -->
   <p class="note">
     This web component supports a configurable <code>punctuation</code>
     attribute/property. If the punctuation includes an exclamation mark, the

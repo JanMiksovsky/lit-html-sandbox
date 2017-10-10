@@ -1,4 +1,4 @@
-import { html } from '../../node_modules/lit-html/lit-html.js';
+// import { html } from '../../node_modules/lit-html/lit-html.js';
 import Symbol from './Symbol.js';
 import symbols from './symbols.js';
 
@@ -79,7 +79,8 @@ export default function DefaultSlotContentMixin(Base) {
     }
 
     renderContent() {
-      return html`<slot></slot>`;
+      // return html`<slot></slot>`;
+      return document.createElement('slot');
     }
 
     [symbols.shadowCreated]() {
@@ -121,7 +122,7 @@ function assignedNodesChanged(component) {
   try {
     content = slot ?
       slot.assignedNodes({ flatten: true }) :
-      [];
+      null;
   } catch (e) {
     content = [];
   }
@@ -132,7 +133,7 @@ function assignedNodesChanged(component) {
 
 function defaultSlot(element) {
   const defaultSlot = element.shadowRoot && element.shadowRoot.querySelector('slot:not([name])');
-  if (element.shadowRoot && !defaultSlot) {
+  if (!element.shadowRoot || !defaultSlot) {
     console.warn(`DefaultSlotContentMixin expects a component to define a shadow tree that includes a default (unnamed) slot.`);
   }
   return defaultSlot;

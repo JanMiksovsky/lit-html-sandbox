@@ -1,18 +1,13 @@
-// import { html } from '../../node_modules/lit-html/lit-html.js';
-import { formatStyleProps, mergeDeep } from '../mixins/helpers.js';
+import { mergeDeep } from '../mixins/helpers.js';
 import AttributeMarshallingMixin from '../mixins/AttributeMarshallingMixin.js';
-// import ContentCompatMixin from '../mixins/ContentCompatMixin.js';
-import ChildrenContentMixin from '../mixins/ChildrenContentMixin.js';
-// import LitHtmlCompatMixin from '../mixins/LitHtmlCompatMixin.js';
+import DefaultSlotContentMixin from '../mixins/DefaultSlotContentMixin.js';
 import ReactiveMixin from '../mixins/ReactiveMixin.js';
 import symbols from '../mixins/symbols.js';
 
 
 const Base =
   AttributeMarshallingMixin(
-  // ContentCompatMixin(
-    ChildrenContentMixin(
-  // LitHtmlCompatMixin(
+  DefaultSlotContentMixin(
   ReactiveMixin(
     HTMLElement
   )));
@@ -26,7 +21,7 @@ const Base =
  *
  * The component itself is a trivial "Hello, world" element.
  */
-export default class TestElement extends Base {
+export default class TestElementIEShadow extends Base {
 
   constructor() {
     super();
@@ -61,22 +56,30 @@ export default class TestElement extends Base {
 
   render() {
     this[symbols.rendering] = true;
+    
+    if (!this.shadowRoot) {
+      const root = this.attachShadow({ mode: 'open' });
+      root.appendChild(document.createTextNode('Hello'));
+      this.$ = {};
+      this.$.comma = root.appendChild(document.createTextNode(''));
+      root.appendChild(document.createElement('slot'));
+      this.$.punctuation = root.appendChild(document.createTextNode(''));
+      this[symbols.shadowCreated]();
+    }
 
     if (this.state.content === null) {
       return;
     }
-    
+
     if (super.render) { super.render(); }
     while (this.childNodes.length > 0) {
       this.removeChild(this.childNodes[0]);
     }
     
     const hasContent = this.state.content && this.state.content.length > 0;
-    const comma = hasTextContent(this) ? ', ' : '';
-    this.appendChild(document.createTextNode('Hello'));
-    this.appendChild(document.createTextNode(comma));
+    this.$.comma.textContent = hasTextContent(this) ? ', ' : '';
     this.state.content.forEach(item => this.appendChild(item));
-    this.appendChild(document.createTextNode(this.punctuation));
+    this.$.punctuation.textContent = this.state.punctuation;
 
     this[symbols.rendering] = false;
   }
@@ -112,4 +115,4 @@ function hasTextContent(component) {
 }
 
 
-customElements.define('test-element', TestElement);
+customElements.define('test-element-ie-shadow', TestElementIEShadow);
