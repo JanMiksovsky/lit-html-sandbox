@@ -86,16 +86,14 @@ export default class ListBox extends Base {
   }
 
   get template() {
+    const containerStyle = {
+      'flex': '1',
+      '-webkit-overflow-scrolling': 'touch', /* for momentum scrolling */
+      'overflow-x': 'hidden',
+      'overflow-y': 'scroll'
+    };
     const template = html`
-      <style>
-        #itemsContainer {
-          flex: 1;
-          -webkit-overflow-scrolling: touch; /* for momentum scrolling */
-          overflow-x: hidden;
-          overflow-y: scroll;
-        }
-      </style>
-      <div id="itemsContainer" role="none">
+      <div id="itemsContainer" role="none" style=${formatStyleProps(containerStyle)}>
         ${this.renderContent()}
       </div>
     `;
