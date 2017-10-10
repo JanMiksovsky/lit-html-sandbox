@@ -55,12 +55,10 @@ export function parseStyle(element) {
 
 export function updateProps(element, props) {
   Object.keys(props).forEach(key => {
-    const value = key === 'style' ?
-      formatStyle(props[key]) :
-      props[key];
-    // TODO: See whether this dirty check works on `style` in IE, or whether it
-    // always thinks the value has changed.
-    if (isAttribute(key) && element.getAttribute(key) !== value) {
+    const value = props[key];
+    if (key === 'style') {
+      Object.assign(element.style, value);
+    } else if (isAttribute(key) && element.getAttribute(key) !== value) {
       // Update attribute
       if (value) {
         element.setAttribute(key, value);
